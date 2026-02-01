@@ -50,11 +50,11 @@ const ProjectMarquee = () => {
                 </motion.div>
             </div>
 
-            {/* MODALE DETAILS - PORTAL (STRICT FIXED) */}
+            {/* MODALE DETAILS - PORTAL (STRICT FIXED Z-10000) */}
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedProject && (
-                        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+                        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
                             <motion.div
                                 layoutId={`project-${selectedProject.id}-modal`}
                                 initial={{ opacity: 0, scale: 0.95, y: 20 }}

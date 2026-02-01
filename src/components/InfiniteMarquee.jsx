@@ -57,11 +57,11 @@ const InfiniteMarquee = () => {
                 </motion.div>
             </div>
 
-            {/* MODALE DÉTAILS - PORTAL (FIXED Z-9999 STRICT) */}
+            {/* MODALE DÉTAILS - PORTAL (FIXED Z-10000 STRICT) */}
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (
-                        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+                        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
                             {/* Note: Overlay merged into container background for solidity */}
 
                             <motion.div
