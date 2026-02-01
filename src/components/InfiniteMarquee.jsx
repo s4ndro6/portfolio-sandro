@@ -9,7 +9,7 @@ const InfiniteMarquee = () => {
     const [selectedTool, setSelectedTool] = useState(null);
 
     return (
-        <div className="relative border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center justify-center h-[120px] w-full">
+        <div className="relative border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center justify-center h-[110px] w-full">
             {/* Dégradés latéraux */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
@@ -60,7 +60,7 @@ const InfiniteMarquee = () => {
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
                             {/* Overlay flou */}
                             <motion.div
                                 initial={{ opacity: 0 }}
