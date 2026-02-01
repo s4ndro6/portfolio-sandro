@@ -3,19 +3,19 @@ export const tools = [
         name: "Figma",
         color: "#F24E1E",
         desc: "Prototypage UI/UX haute fidélité.",
-        icon: "https://cdn.simpleicons.org/figma/F24E1E"
+        icon: "https://cdn.simpleicons.org/figma/white"
     },
     {
         name: "Photoshop",
         color: "#31A8FF",
         desc: "Retouche photo avancée.",
-        icon: "https://cdn.simpleicons.org/adobephotoshop/31A8FF"
+        icon: "https://cdn.simpleicons.org/adobephotoshop/white"
     },
     {
         name: "Illustrator",
         color: "#FF9A00",
         desc: "Création vectorielle.",
-        icon: "https://cdn.simpleicons.org/adobeillustrator/FF9A00"
+        icon: "https://cdn.simpleicons.org/adobeillustrator/white"
     },
     {
         name: "n8n",
@@ -45,12 +45,12 @@ export const tools = [
         name: "VS Code",
         color: "#007ACC",
         desc: "Développement.",
-        icon: "https://cdn.simpleicons.org/visualstudiocode/007ACC"
+        icon: "https://cdn.simpleicons.org/visualstudiocode/white"
     },
     {
         name: "OpenAI",
         color: "#412991",
         desc: "IA et Code.",
-        icon: "https://cdn.simpleicons.org/openai/412991"
+        icon: "https://cdn.simpleicons.org/openai/white"
     }
 ];
