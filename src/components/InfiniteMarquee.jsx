@@ -8,44 +8,58 @@ const InfiniteMarquee = () => {
     const [selectedTool, setSelectedTool] = useState(null);
 
     return (
-        <div className="relative py-8 bg-white/5 border-y border-white/5 backdrop-blur-md z-20 overflow-hidden flex items-center justify-center h-[140px]">
+        <div className="relative border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center justify-center" style={{ height: '120px' }}>
             {/* Dégradés latéraux pour l'immersion */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
 
             <div
-                className="flex w-full"
+                className="flex w-full overflow-hidden"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
                 <motion.div
-                    className="flex flex-nowrap items-center"
+                    className="flex items-center"
                     animate={{ x: ["0%", "-50%"] }}
                     transition={{ duration: 40, ease: "linear", repeat: Infinity }}
-                    style={{ animationPlayState: isHovered ? "paused" : "running" }}
+                    style={{ animationPlayState: isHovered ? "paused" : "running", display: 'flex', gap: '80px', paddingLeft: '40px' }}
                 >
                     {/* Triple boucle pour fluidité infinie */}
                     {[...tools, ...tools, ...tools, ...tools].map((tool, idx) => (
                         <div
                             key={idx}
-                            className="flex-shrink-0 mx-10 cursor-pointer group relative flex flex-col items-center justify-center"
+                            className="flex-shrink-0 cursor-pointer group relative flex flex-col items-center justify-center p-2"
                             onClick={() => setSelectedTool(tool)}
                         >
                             {/* LOGO SVG */}
-                            <div className="h-10 w-auto flex items-center justify-center transition-all duration-300 filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110">
+                            <div className="flex items-center justify-center transition-all duration-300 transform group-hover:scale-110"
+                                style={{
+                                    filter: 'grayscale(100%) opacity(0.6)',
+                                    opacity: 0.6,
+                                    height: '45px',
+                                    transition: '0.3s'
+                                }}
+                            >
+                                <div className="absolute inset-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:filter-none" style={{ filter: 'grayscale(0%) opacity(1)' }}>
+                                    {/* This overlay handles the hover state separately to ensure clean transition */}
+                                </div>
+
                                 <svg
                                     viewBox={tool.viewBox}
-                                    className="h-full w-auto block pointer-events-none"
-                                    style={{ maxHeight: '40px', minWidth: '40px' }} // Contraintes strictes
+                                    className="w-auto block pointer-events-none transition-all duration-300 group-hover:filter-none group-hover:opacity-100"
+                                    style={{ height: '45px' }}
                                 >
                                     {tool.path}
                                 </svg>
                             </div>
 
-                            {/* TOOLTIP NOM */}
-                            <span className="absolute -bottom-8 px-2 py-1 rounded bg-black/80 text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-white/10">
-                                {tool.name}
-                            </span>
+                            {/* HOVER OVERRIDE VIA CSS DIRECT */}
+                            <style jsx>{`
+                                .group:hover svg {
+                                    filter: grayscale(0%) !important;
+                                    opacity: 1 !important;
+                                }
+                            `}</style>
                         </div>
                     ))}
                 </motion.div>
@@ -60,7 +74,7 @@ const InfiniteMarquee = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setSelectedTool(null)}
-                            className="absolute inset-0 bg-black/90 backdrop-blur-md"
+                            className="absolute inset-0 bg-black/90 backdrop-blur-lg"
                         />
                         <motion.div
                             layoutId={`tool-${selectedTool.name}`}
