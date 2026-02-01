@@ -11,7 +11,7 @@ const IntroHero = ({ onContinue }) => {
   ];
 
   return (
-    <section className="h-screen w-full overflow-y-auto overflow-x-hidden relative z-50 bg-black/30 backdrop-blur-md">
+    <section className="h-screen w-full overflow-y-auto overflow-x-hidden relative z-50 bg-black/30 backdrop-blur-md pointer-events-auto">
       <div className="min-h-full flex flex-col justify-center items-center px-6 py-20 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-16 w-full justify-center">
 

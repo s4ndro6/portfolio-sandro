@@ -49,7 +49,7 @@ function App() {
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -100, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
-            className="relative z-20"
+            className="relative z-50"
           >
             <IntroHero onContinue={handleContinue} />
           </motion.div>
