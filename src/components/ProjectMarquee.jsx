@@ -54,13 +54,13 @@ const ProjectMarquee = () => {
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedProject && (
-                        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+                        <div className="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-xl pointer-events-auto">
                             <motion.div
                                 layoutId={`project-${selectedProject.id}-modal`}
                                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                                className="bg-[#111] border border-white/10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl relative shadow-2xl flex flex-col md:flex-row"
+                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#111] border border-white/10 w-[95%] max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl flex flex-col md:flex-row z-[10001]"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 <button onClick={() => setSelectedProject(null)} className="absolute top-4 right-4 z-50 text-white hover:text-[#E91E63] transition-colors bg-black/50 rounded-full p-2"><X size={24} /></button>
