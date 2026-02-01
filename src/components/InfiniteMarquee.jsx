@@ -57,17 +57,19 @@ const InfiniteMarquee = () => {
                 </motion.div>
             </div>
 
-            {/* MODALE DÉTAILS - PORTAL (FIXED Z-10000 STRICT) */}
+            {/* MODALE DÉTAILS - PORTAL (FIXED CENTERED STACK) */}
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (
-                        <div className="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-xl pointer-events-auto">
+                        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+                            {/* Overlay merged/container */}
+
                             <motion.div
                                 layoutId={`tool-${selectedTool.name}-modal`}
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#1A1A1A] border border-white/10 p-8 rounded-3xl w-[90%] max-w-sm text-center shadow-2xl flex flex-col items-center justify-center z-[10001]"
+                                className="bg-[#1A1A1A] border border-white/10 p-8 rounded-3xl relative max-w-sm w-full text-center shadow-2xl flex flex-col items-center justify-center"
                                 onClick={(e) => e.stopPropagation()}
                             >
                                 <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>

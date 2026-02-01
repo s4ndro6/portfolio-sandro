@@ -14,7 +14,7 @@ import Services from './components/Services';
 import Skills from './components/Skills';
 import InfiniteMarquee from './components/InfiniteMarquee';
 import Experiences from './components/Experiences';
-import ProjectMarquee from './components/ProjectMarquee'; // New Component
+import ProjectCarousel from './components/ProjectCarousel'; // New Component
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -90,7 +90,7 @@ function App() {
                 Actually, the user said "Crée ou modifie un composant ProjectMarquee.jsx... Fais défiler tes projets". 
                 I'll place it BEFORE AboutProjects. */}
 
-            <ProjectMarquee />
+            <ProjectCarousel />
 
             <AboutProjects />
 

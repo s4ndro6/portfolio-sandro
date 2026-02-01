@@ -56,10 +56,9 @@ const AboutProjects = () => {
       </div>
       <AnimatePresence>
         {selectedProject && (
-          <div className="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-xl pointer-events-auto">
-            {/* Merged Overlay for solidity */}
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedProject(null)} className="absolute inset-0" />
-            <motion.div layoutId={`p-${selectedProject.id}`} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0F0F0F] border border-white/10 w-[95%] max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl z-[10001] flex flex-col md:flex-row shadow-2xl">
+            <motion.div layoutId={`p-${selectedProject.id}`} className="bg-[#0F0F0F] border border-white/10 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl relative z-10 flex flex-col md:flex-row shadow-2xl mx-auto my-auto">
               <button onClick={() => setSelectedProject(null)} className="absolute top-4 right-4 text-white hover:text-[#E91E63] transition-colors z-50 bg-black/50 p-2 rounded-full"><X /></button>
 
               <div className="w-full md:w-1/3 relative">
