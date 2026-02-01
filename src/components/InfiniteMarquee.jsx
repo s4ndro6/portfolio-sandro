@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { tools } from '../data/tools';
 import { X } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 const InfiniteMarquee = () => {
     const [isHovered, setIsHovered] = useState(false);
@@ -41,7 +42,7 @@ const InfiniteMarquee = () => {
                                 <svg
                                     viewBox={tool.viewBox}
                                     className="block w-auto transition-all duration-300 filter grayscale opacity-50 group-hover:filter-none group-hover:opacity-100 group-hover:scale-110"
-                                    style={{ height: '32px' }} // Hauteur Force 32px
+                                    style={{ height: '40px' }}
                                 >
                                     {tool.path}
                                 </svg>
@@ -56,43 +57,41 @@ const InfiniteMarquee = () => {
                 </motion.div>
             </div>
 
-            {/* MODALE DÉTAILS */}
-            <AnimatePresence>
-                {selectedTool && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                        {/* Overlay flou */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setSelectedTool(null)}
-                            className="absolute inset-0 bg-black/90 backdrop-blur-md"
-                        />
+            {/* MODALE DÉTAILS - PORTAL vers BODY pour casser la contrainte de transform du parent */}
+            {typeof document !== 'undefined' && createPortal(
+                <AnimatePresence>
+                    {selectedTool && (
+                        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+                            {/* Overlay flou */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setSelectedTool(null)}
+                                className="absolute inset-0 bg-black/90 backdrop-blur-lg"
+                            />
 
-                        {/* Contenu Modal */}
-                        <motion.div
-                            layoutId={`tool-${selectedTool.name}`}
-                            className="bg-[#1A1A1A] border border-white/10 p-8 rounded-3xl relative z-[101] max-w-sm text-center shadow-2xl flex flex-col items-center justify-center"
-                        >
-                            <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>
+                            {/* Contenu Modal */}
+                            <motion.div
+                                layoutId={`tool-${selectedTool.name}`}
+                                className="bg-[#1A1A1A] border border-white/10 p-8 rounded-3xl relative z-[10000] max-w-sm text-center shadow-2xl flex flex-col items-center justify-center"
+                            >
+                                <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>
 
-                            <div className="w-16 h-16 mb-6 flex items-center justify-center p-2 bg-white/5 rounded-2xl border border-white/5">
-                                <svg viewBox={selectedTool.viewBox} className="w-full h-full drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                                    {tool => {
-                                        // Trick pour bypasser le filtre grayscale parent si on utilisait layoutId strict, 
-                                        // mais ici c'est un re-render propre.
-                                        return selectedTool.path
-                                    }}
-                                    {selectedTool.path}
-                                </svg>
-                            </div>
+                                <div className="w-16 h-16 mb-6 flex items-center justify-center p-2 bg-white/5 rounded-2xl border border-white/5">
+                                    <svg viewBox={selectedTool.viewBox} className="w-full h-full drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                                        {selectedTool.path}
+                                    </svg>
+                                </div>
 
-                            <h4 className="text-2xl font-black text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
-                            <p className="text-gray-400 text-sm leading-relaxed font-light">{selectedTool.desc}</p>
-                        </motion.div>
-                    </div>
-                )}
-            </AnimatePresence>
+                                <h4 className="text-2xl font-black text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
+                                <p className="text-gray-400 text-sm leading-relaxed font-light">{selectedTool.desc}</p>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </div>
     );
 };
