@@ -9,14 +9,14 @@ const InfiniteMarquee = () => {
     const [selectedTool, setSelectedTool] = useState(null);
 
     return (
-        <div className="relative border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center justify-center h-[110px] w-full">
+        <div className="relative border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center justify-center h-[100px] w-full">
             {/* Dégradés latéraux */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
 
             {/* MARQUEE CONTAINER */}
             <div
-                className="flex w-full overflow-hidden items-center"
+                className="flex w-full overflow-hidden items-center justify-center"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
@@ -43,7 +43,7 @@ const InfiniteMarquee = () => {
                                     src={tool.icon}
                                     alt={tool.name}
                                     className="block transition-all duration-300 filter grayscale opacity-50 group-hover:filter-none group-hover:opacity-100 group-hover:scale-110"
-                                    style={{ height: '35px', width: 'auto', objectFit: 'contain' }}
+                                    style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
                                 />
                             </div>
 
@@ -60,28 +60,47 @@ const InfiniteMarquee = () => {
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-[12px]">
-                            {/* Overlay is now part of the container background for simpler stacking */}
-
-                            {/* Contenu Modal */}
+                        <>
+                            {/* Overlay Separé */}
                             <motion.div
-                                layoutId={`tool-${selectedTool.name}-modal`}
-                                className="bg-[#1A1A1A] border border-white/10 p-8 rounded-3xl relative z-[10000] max-w-sm text-center shadow-2xl flex flex-col items-center justify-center"
-                            >
-                                <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setSelectedTool(null)}
+                                className="fixed inset-0 z-[9998] bg-black/80 backdrop-blur-sm"
+                            />
 
-                                <div className="w-16 h-16 mb-6 flex items-center justify-center p-2 bg-white/5 rounded-2xl border border-white/5">
-                                    <img
-                                        src={selectedTool.icon}
-                                        alt={selectedTool.name}
-                                        className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-                                    />
-                                </div>
+                            {/* Contenu Modal Centré avec Transform */}
+                            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] w-[90%] max-w-[500px]" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                                <motion.div
+                                    layoutId={`tool-${selectedTool.name}-modal`}
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    className="flex flex-col items-center justify-center text-center shadow-2xl relative"
+                                    style={{
+                                        background: 'rgba(0,0,0,0.9)',
+                                        backdropFilter: 'blur(15px)',
+                                        borderRadius: '16px',
+                                        padding: '24px',
+                                        border: '1px solid rgba(255,255,255,0.1)'
+                                    }}
+                                >
+                                    <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>
 
-                                <h4 className="text-2xl font-black text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
-                                <p className="text-gray-400 text-sm leading-relaxed font-light">{selectedTool.desc}</p>
-                            </motion.div>
-                        </div>
+                                    <div className="w-16 h-16 mb-6 flex items-center justify-center p-2 bg-white/5 rounded-2xl border border-white/5">
+                                        <img
+                                            src={selectedTool.icon}
+                                            alt={selectedTool.name}
+                                            className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                                        />
+                                    </div>
+
+                                    <h4 className="text-2xl font-black text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
+                                    <p className="text-gray-400 text-sm leading-relaxed font-light">{selectedTool.desc}</p>
+                                </motion.div>
+                            </div>
+                        </>
                     )}
                 </AnimatePresence>,
                 document.body

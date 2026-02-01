@@ -21,25 +21,25 @@ export const tools = [
         name: "n8n",
         color: "#EA4B71",
         desc: "Workflows d'automatisation.",
-        icon: "https://cdn.simpleicons.org/n8n/EA4B71"
+        icon: "https://cdn.simpleicons.org/n8n/white"
     },
     {
         name: "Make",
         color: "#690EB1",
         desc: "Intégrations visuelles.",
-        icon: "https://cdn.simpleicons.org/make/690EB1"
+        icon: "https://cdn.simpleicons.org/make/white"
     },
     {
         name: "Instagram",
         color: "#E4405F",
         desc: "Stratégies de contenu.",
-        icon: "https://cdn.simpleicons.org/instagram/E4405F"
+        icon: "https://cdn.simpleicons.org/instagram/white"
     },
     {
         name: "TikTok",
         color: "#FFFFFF",
         desc: "Viralité et rétention.",
-        icon: "https://cdn.simpleicons.org/tiktok/FFFFFF"
+        icon: "https://cdn.simpleicons.org/tiktok/white"
     },
     {
         name: "VS Code",
