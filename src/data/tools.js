@@ -1,56 +1,11 @@
 export const tools = [
-    {
-        name: "Figma",
-        color: "#F24E1E",
-        desc: "Prototypage UI/UX haute fidélité.",
-        icon: "https://cdn.simpleicons.org/figma/white"
-    },
-    {
-        name: "Photoshop",
-        color: "#31A8FF",
-        desc: "Retouche photo avancée.",
-        icon: "https://cdn.simpleicons.org/adobephotoshop/white"
-    },
-    {
-        name: "Illustrator",
-        color: "#FF9A00",
-        desc: "Création vectorielle.",
-        icon: "https://cdn.simpleicons.org/adobeillustrator/white"
-    },
-    {
-        name: "n8n",
-        color: "#EA4B71",
-        desc: "Workflows d'automatisation.",
-        icon: "https://cdn.simpleicons.org/n8n/white"
-    },
-    {
-        name: "Make",
-        color: "#690EB1",
-        desc: "Intégrations visuelles.",
-        icon: "https://cdn.simpleicons.org/make/white"
-    },
-    {
-        name: "Instagram",
-        color: "#E4405F",
-        desc: "Stratégies de contenu.",
-        icon: "https://cdn.simpleicons.org/instagram/white"
-    },
-    {
-        name: "TikTok",
-        color: "#FFFFFF",
-        desc: "Viralité et rétention.",
-        icon: "https://cdn.simpleicons.org/tiktok/white"
-    },
-    {
-        name: "VS Code",
-        color: "#007ACC",
-        desc: "Développement.",
-        icon: "https://cdn.simpleicons.org/visualstudiocode/white"
-    },
-    {
-        name: "OpenAI",
-        color: "#412991",
-        desc: "IA et Code.",
-        icon: "https://cdn.simpleicons.org/openai/white"
-    }
+    { name: 'Figma', icon: 'https://cdn.simpleicons.org/figma/white', color: "#F24E1E", desc: "Prototypage UI/UX haute fidélité." },
+    { name: 'Photoshop', icon: 'https://cdn.simpleicons.org/adobephotoshop/white', color: "#31A8FF", desc: "Retouche photo avancée." },
+    { name: 'Illustrator', icon: 'https://cdn.simpleicons.org/adobeillustrator/white', color: "#FF9A00", desc: "Création vectorielle." },
+    { name: 'n8n', icon: 'https://cdn.simpleicons.org/n8n/white', color: "#EA4B71", desc: "Workflows d'automatisation." },
+    { name: 'Make', icon: 'https://cdn.simpleicons.org/make/white', color: "#690EB1", desc: "Intégrations visuelles." },
+    { name: 'Instagram', icon: 'https://cdn.simpleicons.org/instagram/white', color: "#E4405F", desc: "Stratégies de contenu." },
+    { name: 'TikTok', icon: 'https://cdn.simpleicons.org/tiktok/white', color: "#FFFFFF", desc: "Viralité et rétention." },
+    { name: 'VS Code', icon: 'https://cdn.simpleicons.org/visualstudiocode/white', color: "#007ACC", desc: "Développement." },
+    { name: 'OpenAI', icon: 'https://cdn.simpleicons.org/openai/white', color: "#412991", desc: "IA et Code." }
 ];

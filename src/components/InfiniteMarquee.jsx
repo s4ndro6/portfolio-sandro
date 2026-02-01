@@ -9,8 +9,8 @@ const InfiniteMarquee = () => {
     const [selectedTool, setSelectedTool] = useState(null);
 
     return (
-        <div className="relative border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center justify-center h-[100px] w-full">
-            {/* Dégradés latéraux */}
+        <div className="relative border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center justify-center h-[120px] w-full">
+            {/* Dégradés latéraux (Optionnel mais garde l'esthétique "Pro") */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
 
@@ -38,12 +38,12 @@ const InfiniteMarquee = () => {
                             onClick={() => setSelectedTool(tool)}
                         >
                             <div className="flex items-center justify-center transition-all duration-300">
-                                {/* LOGO IMG - CDN */}
+                                {/* LOGO IMG - CDN STRICT */}
                                 <img
                                     src={tool.icon}
                                     alt={tool.name}
                                     className="block transition-all duration-300 filter grayscale opacity-50 group-hover:filter-none group-hover:opacity-100 group-hover:scale-110"
-                                    style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
+                                    style={{ height: '35px', width: 'auto', objectFit: 'contain' }}
                                 />
                             </div>
 
@@ -56,51 +56,38 @@ const InfiniteMarquee = () => {
                 </motion.div>
             </div>
 
-            {/* MODALE DÉTAILS - PORTAL vers BODY */}
+            {/* MODALE DÉTAILS - PORTAL vers BODY (FIXED Z-9999) */}
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (
-                        <>
-                            {/* Overlay Separé */}
+                        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+                            {/* Note: Overlay merged into container background for solidity */}
+
                             <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                onClick={() => setSelectedTool(null)}
-                                className="fixed inset-0 z-[9998] bg-black/80 backdrop-blur-sm"
-                            />
+                                layoutId={`tool-${selectedTool.name}-modal`}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                className="bg-[#1A1A1A] border border-white/10 p-8 rounded-3xl relative max-w-sm w-full text-center shadow-2xl flex flex-col items-center justify-center"
+                                onClick={(e) => e.stopPropagation()} // Prevent click through
+                            >
+                                <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>
 
-                            {/* Contenu Modal Centré avec Transform */}
-                            <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] w-[90%] max-w-[500px]" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                                <motion.div
-                                    layoutId={`tool-${selectedTool.name}-modal`}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    className="flex flex-col items-center justify-center text-center shadow-2xl relative"
-                                    style={{
-                                        background: 'rgba(0,0,0,0.9)',
-                                        backdropFilter: 'blur(15px)',
-                                        borderRadius: '16px',
-                                        padding: '24px',
-                                        border: '1px solid rgba(255,255,255,0.1)'
-                                    }}
-                                >
-                                    <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>
+                                <div className="w-16 h-16 mb-6 flex items-center justify-center p-2 bg-white/5 rounded-2xl border border-white/5">
+                                    <img
+                                        src={selectedTool.icon}
+                                        alt={selectedTool.name}
+                                        className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                                    />
+                                </div>
 
-                                    <div className="w-16 h-16 mb-6 flex items-center justify-center p-2 bg-white/5 rounded-2xl border border-white/5">
-                                        <img
-                                            src={selectedTool.icon}
-                                            alt={selectedTool.name}
-                                            className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-                                        />
-                                    </div>
+                                <h4 className="text-2xl font-black text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
+                                <p className="text-gray-400 text-sm leading-relaxed font-light">{selectedTool.desc}</p>
+                            </motion.div>
 
-                                    <h4 className="text-2xl font-black text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
-                                    <p className="text-gray-400 text-sm leading-relaxed font-light">{selectedTool.desc}</p>
-                                </motion.div>
-                            </div>
-                        </>
+                            {/* Click anywhere outside content to close */}
+                            <div className="absolute inset-0 z-[-1]" onClick={() => setSelectedTool(null)} />
+                        </div>
                     )}
                 </AnimatePresence>,
                 document.body
