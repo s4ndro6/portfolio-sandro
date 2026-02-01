@@ -1,3 +1,4 @@
+// BUILD_ID: 982147
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User } from 'lucide-react';
@@ -13,6 +14,7 @@ import Services from './components/Services';
 import Skills from './components/Skills';
 import InfiniteMarquee from './components/InfiniteMarquee';
 import Experiences from './components/Experiences';
+import ProjectMarquee from './components/ProjectMarquee'; // New Component
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -29,8 +31,6 @@ function App() {
 
   const handleContinue = () => { setShowMainSite(true); };
   const handleBackToBio = (e) => { e.preventDefault(); setShowMainSite(false); };
-
-  const sliderImages = ["/images/magazine.png", "/images/pulse digital.png", "/images/avant-apres.png", "/images/491shots_so.png"];
 
   return (
     <>
@@ -85,6 +85,12 @@ function App() {
               <InfiniteMarquee />
               <Experiences />
             </div>
+
+            {/* Replaced AboutProjects or added alongside? User said "Create Marquee". I'll keep AboutProjects for details but add Marquee above it or replacement. 
+                Actually, the user said "Crée ou modifie un composant ProjectMarquee.jsx... Fais défiler tes projets". 
+                I'll place it BEFORE AboutProjects. */}
+
+            <ProjectMarquee />
 
             <AboutProjects />
 

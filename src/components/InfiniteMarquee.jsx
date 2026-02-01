@@ -57,7 +57,7 @@ const InfiniteMarquee = () => {
                 </motion.div>
             </div>
 
-            {/* MODALE DÉTAILS - PORTAL vers BODY (FIXED Z-9999) */}
+            {/* MODALE DÉTAILS - PORTAL (FIXED Z-9999 STRICT) */}
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (

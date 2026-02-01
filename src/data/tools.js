@@ -1,4 +1,3 @@
-// Force Build: 2026-02-01 23:32
 export const tools = [
     { name: 'Figma', icon: 'https://cdn.simpleicons.org/figma/white', color: "#F24E1E", desc: "Prototypage UI/UX haute fidélité." },
     { name: 'Photoshop', icon: 'https://cdn.simpleicons.org/adobephotoshop/white', color: "#31A8FF", desc: "Retouche photo avancée." },
