@@ -32,34 +32,20 @@ const InfiniteMarquee = () => {
                             onClick={() => setSelectedTool(tool)}
                         >
                             {/* LOGO SVG */}
-                            <div className="flex items-center justify-center transition-all duration-300 transform group-hover:scale-110"
-                                style={{
-                                    filter: 'grayscale(100%) opacity(0.6)',
-                                    opacity: 0.6,
-                                    height: '45px',
-                                    transition: '0.3s'
-                                }}
-                            >
-                                <div className="absolute inset-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:filter-none" style={{ filter: 'grayscale(0%) opacity(1)' }}>
-                                    {/* This overlay handles the hover state separately to ensure clean transition */}
-                                </div>
-
+                            <div className="flex items-center justify-center transition-all duration-300 transform group-hover:scale-110">
                                 <svg
                                     viewBox={tool.viewBox}
-                                    className="w-auto block pointer-events-none transition-all duration-300 group-hover:filter-none group-hover:opacity-100"
+                                    className="w-auto block pointer-events-none transition-all duration-300 filter grayscale opacity-60 group-hover:filter-none group-hover:opacity-100"
                                     style={{ height: '45px' }}
                                 >
                                     {tool.path}
                                 </svg>
                             </div>
 
-                            {/* HOVER OVERRIDE VIA CSS DIRECT */}
-                            <style jsx>{`
-                                .group:hover svg {
-                                    filter: grayscale(0%) !important;
-                                    opacity: 1 !important;
-                                }
-                            `}</style>
+                            {/* TOOLTIP NOM (Optionnel, masqué par défaut pour le style épuré demandé, mais présent en opacité 0) */}
+                            <span className="absolute -bottom-8 px-2 py-1 rounded bg-black/80 text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-white/10 z-50">
+                                {tool.name}
+                            </span>
                         </div>
                     ))}
                 </motion.div>

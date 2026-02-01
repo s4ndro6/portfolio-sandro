@@ -1,3 +1,4 @@
+import React from 'react';
 
 export const tools = [
     {
@@ -5,7 +6,7 @@ export const tools = [
         color: "#F24E1E",
         desc: "Prototypage UI/UX haute fidélité. Je l'utilise pour tout : maquettes, design systems, présentations.",
         viewBox: "0 0 38 57",
-        path: <path fill="#F24E1E" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#A259FF" d="M0 47.5c0 5.25 4.25 9.5 9.5 9.5S19 52.75 19 47.5V28.5H9.5C4.25 28.5 0 32.75 0 38v9.5z"/><path fill="#F24E1E" d="M0 28.5c0 5.25 4.25 9.5 9.5 9.5H19V19H9.5C4.25 19 0 23.25 0 28.5z"/><path fill="#1ABCFE" d="M0 9.5C0 14.75 4.25 19 9.5 19H19V0H9.5C4.25 0 0 4.25 0 9.5z"/><path fill="#0ACF83" d="M19 0v19h9.5c5.25 0 9.5-4.25 9.5-9.5S33.75 0 28.5 0H19z"/>
+        path: <><path fill="#F24E1E" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" /><path fill="#A259FF" d="M0 47.5c0 5.25 4.25 9.5 9.5 9.5S19 52.75 19 47.5V28.5H9.5C4.25 28.5 0 32.75 0 38v9.5z" /><path fill="#F24E1E" d="M0 28.5c0 5.25 4.25 9.5 9.5 9.5H19V19H9.5C4.25 19 0 23.25 0 28.5z" /><path fill="#1ABCFE" d="M0 9.5C0 14.75 4.25 19 9.5 19H19V0H9.5C4.25 0 0 4.25 0 9.5z" /><path fill="#0ACF83" d="M19 0v19h9.5c5.25 0 9.5-4.25 9.5-9.5S33.75 0 28.5 0H19z" /></>
     },
     {
         name: "Photoshop",
