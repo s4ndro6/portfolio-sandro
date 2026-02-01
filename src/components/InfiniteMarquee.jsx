@@ -44,7 +44,7 @@ const InfiniteMarquee = () => {
                                     className="block w-auto transition-all duration-300 filter grayscale opacity-50 group-hover:filter-none group-hover:opacity-100 group-hover:scale-110"
                                     style={{ height: '40px', width: 'auto' }}
                                 >
-                                    {tool.path}
+                                    <path d={tool.path} fill={tool.color} />
                                 </svg>
                             </div>
 
@@ -57,7 +57,7 @@ const InfiniteMarquee = () => {
                 </motion.div>
             </div>
 
-            {/* MODALE DÉTAILS - PORTAL vers BODY pour casser la contrainte de transform du parent */}
+            {/* MODALE DÉTAILS - PORTAL vers BODY */}
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (
@@ -68,7 +68,11 @@ const InfiniteMarquee = () => {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 onClick={() => setSelectedTool(null)}
-                                className="absolute inset-0 bg-black/90 backdrop-blur-lg"
+                                className="absolute inset-0 bg-black/80 backdrop-blur-lg"
+                                style={{
+                                    backgroundColor: 'rgba(0,0,0,0.8)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
                             />
 
                             {/* Contenu Modal */}
@@ -80,7 +84,7 @@ const InfiniteMarquee = () => {
 
                                 <div className="w-16 h-16 mb-6 flex items-center justify-center p-2 bg-white/5 rounded-2xl border border-white/5">
                                     <svg viewBox={selectedTool.viewBox} className="w-full h-full drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                                        {selectedTool.path}
+                                        <path d={selectedTool.path} fill={selectedTool.color} />
                                     </svg>
                                 </div>
 
