@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  background-color: #050505; /* Fond noir profond */
+  color: #ffffff;
+  /* Lissage des polices pour un rendu "Apple" */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- TEXTURE DE FOND (NOISE) --- */
+/* OPTIMISATION : On ne l'affiche que sur les écrans > 768px (Tablettes/PC) */
+/* Sur mobile, ça consomme trop de batterie/GPU pour rien */
+.bg-noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.03; /* Grain très subtil */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  
+  display: none; /* Caché par défaut (Mobile) */
+}
+
+/* On l'active seulement sur PC */
+@media (min-width: 768px) {
+  .bg-noise {
+    display: block;
+  }
+}
+
+/* --- GESTION DU CURSEUR --- */
+/* Sur PC (> 768px), on CACHE le curseur Windows pour afficher le tien */
+@media (min-width: 768px) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* --- ANIMATIONS --- */
+/* L'effet de texte qui brille et change de couleur */
+@keyframes animatedgradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-text-gradient {
+  background-size: 200% auto;
+  animation: animatedgradient 4s ease infinite;
+}
+
+/* --- OPTIMISATIONS PERFORMANCES --- */
+/* Évite le scintillement des images lors des animations */
+img {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force l'accélération matérielle GPU */
+}
