@@ -8,79 +8,78 @@ const InfiniteMarquee = () => {
     const [selectedTool, setSelectedTool] = useState(null);
 
     return (
-        <div className="relative py-5 border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center h-40">
-
+        <div className="relative py-8 bg-white/5 border-y border-white/5 backdrop-blur-md z-20 overflow-hidden flex items-center justify-center h-[140px]">
+            {/* Dégradés latéraux pour l'immersion */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
 
             <div
-                className="flex w-full overflow-hidden"
+                className="flex w-full"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
                 <motion.div
-                    className="flex gap-24 whitespace-nowrap px-4 items-center"
+                    className="flex flex-nowrap items-center"
                     animate={{ x: ["0%", "-50%"] }}
-                    transition={{ duration: 30, ease: "linear", repeat: Infinity, playState: isHovered ? "paused" : "running" }}
+                    transition={{ duration: 40, ease: "linear", repeat: Infinity }}
                     style={{ animationPlayState: isHovered ? "paused" : "running" }}
                 >
-                    {[...tools, ...tools, ...tools].map((tool, idx) => (
+                    {/* Triple boucle pour fluidité infinie */}
+                    {[...tools, ...tools, ...tools, ...tools].map((tool, idx) => (
                         <div
                             key={idx}
-                            className="group relative flex flex-col items-center justify-center gap-4 cursor-pointer cursor-view"
+                            className="flex-shrink-0 mx-10 cursor-pointer group relative flex flex-col items-center justify-center"
                             onClick={() => setSelectedTool(tool)}
                         >
-
-                            <div className="w-12 h-12 md:w-16 md:h-16 relative flex items-center justify-center transition-all duration-300 transform group-hover:scale-110">
-                                <div
-                                    className="absolute inset-0 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300"
-                                    style={{ backgroundColor: tool.color }}
-                                />
-
+                            {/* LOGO SVG */}
+                            <div className="h-10 w-auto flex items-center justify-center transition-all duration-300 filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110">
                                 <svg
-                                    role="img"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-full h-full fill-current text-gray-500 group-hover:text-white transition-colors duration-300 z-10"
-                                    style={{
-                                        filter: isHovered ? `drop-shadow(0 0 5px ${tool.color})` : "none"
-                                    }}
+                                    viewBox={tool.viewBox}
+                                    className="h-full w-auto block pointer-events-none"
+                                    style={{ maxHeight: '40px', minWidth: '40px' }} // Contraintes strictes
                                 >
-                                    <path d={tool.path} />
+                                    {tool.path}
                                 </svg>
                             </div>
 
-                            <span className="text-xs font-bold text-gray-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6">
+                            {/* TOOLTIP NOM */}
+                            <span className="absolute -bottom-8 px-2 py-1 rounded bg-black/80 text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-white/10">
                                 {tool.name}
                             </span>
-
                         </div>
                     ))}
                 </motion.div>
             </div>
 
+            {/* MODALE DÉTAILS */}
             <AnimatePresence>
                 {selectedTool && (
-                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-auto">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setSelectedTool(null)}
-                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            className="absolute inset-0 bg-black/90 backdrop-blur-md"
                         />
                         <motion.div
-                            layoutId={selectedTool.name}
-                            className="bg-[#1A1A1A] border border-white/10 p-6 rounded-2xl relative z-10 max-w-sm text-center shadow-2xl"
+                            layoutId={`tool-${selectedTool.name}`}
+                            className="bg-[#1A1A1A] border border-white/10 p-8 rounded-3xl relative z-10 max-w-sm text-center shadow-2xl mx-auto my-auto"
                         >
-                            <button onClick={() => setSelectedTool(null)} className="absolute top-2 right-2 text-gray-400 hover:text-white"><X size={16} /></button>
-                            <h4 className="text-xl font-bold text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
-                            <p className="text-gray-300 text-sm leading-relaxed">{selectedTool.desc}</p>
+                            <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white"><X size={20} /></button>
+
+                            <div className="mx-auto w-16 h-16 mb-6 flex items-center justify-center">
+                                <svg viewBox={selectedTool.viewBox} className="w-full h-full drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                                    {selectedTool.path}
+                                </svg>
+                            </div>
+
+                            <h4 className="text-2xl font-black text-white mb-3" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
+                            <p className="text-gray-300 text-sm leading-relaxed font-light">{selectedTool.desc}</p>
                         </motion.div>
                     </div>
                 )}
             </AnimatePresence>
-
         </div>
     );
 };
