@@ -8,7 +8,7 @@ const InfiniteMarquee = () => {
     const [selectedTool, setSelectedTool] = useState(null);
 
     return (
-        <div className="relative py-12 border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20">
+        <div className="relative py-5 border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center h-40">
 
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-10 pointer-events-none" />

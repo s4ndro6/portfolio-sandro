@@ -8,7 +8,7 @@ const Skills = () => {
     const [selectedSkill, setSelectedSkill] = useState(null);
 
     return (
-        <section className="py-24 relative overflow-hidden" id="skills">
+        <section className="py-24 mb-24 relative overflow-hidden" id="skills">
             <div className="max-w-7xl mx-auto px-6 relative z-10">
 
                 <div className="mb-16">
@@ -66,7 +66,7 @@ const Skills = () => {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 onClick={() => setSelectedSkill(null)}
-                                className="absolute inset-0 bg-black/90 backdrop-blur-md"
+                                className="absolute inset-0 bg-black/90 backdrop-blur-lg"
                             />
                             <motion.div
                                 layoutId={selectedSkill.category || selectedSkill.title}
