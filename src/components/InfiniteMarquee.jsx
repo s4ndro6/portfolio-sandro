@@ -39,9 +39,9 @@ const InfiniteMarquee = () => {
                             onClick={() => setSelectedTool(tool)}
                         >
                             <div className="flex items-center justify-center transition-all duration-300">
-                                {/* LOGO IMG - CDN STRICT */}
+                                {/* LOGO IMG - CDN STRICT STRING */}
                                 <img
-                                    src={tool.icon}
+                                    src={String(tool.icon)}
                                     alt={tool.name}
                                     className="block transition-all duration-300 filter grayscale opacity-50 group-hover:filter-none group-hover:opacity-100 group-hover:scale-110"
                                     style={{ height: '35px', width: 'auto', objectFit: 'contain' }}
@@ -61,7 +61,7 @@ const InfiniteMarquee = () => {
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (
-                        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+                        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)' }}>
                             {/* Overlay merged/container */}
 
                             <motion.div

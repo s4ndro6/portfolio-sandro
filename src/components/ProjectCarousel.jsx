@@ -25,15 +25,37 @@ const ProjectCarousel = () => {
             </div>
 
             <motion.div ref={carouselRef} className="cursor-grab active:cursor-grabbing overflow-hidden px-6">
+                {/* Auto-scrolling track that allows drag */}
                 <motion.div
                     drag="x"
                     dragConstraints={{ right: 0, left: -width }}
+                    whileTap={{ cursor: "grabbing" }}
+                    animate={{
+                        x: [0, -width]
+                    }}
+                    transition={{
+                        x: {
+                            repeat: Infinity,
+                            repeatType: "loop",
+                            duration: 40, // Adjust speed here
+                            ease: "linear",
+                        },
+                    }}
+                    onDragStart={() => {
+                        // Optional: Pause animation on drag interaction if needed, 
+                        // but simple drag usually overrides 'animate' momentarily or conflicts.
+                        // For a pure 'Auto + Drag', usually we let the users drag, and if they let go, 
+                        // it might resume or stay. With strictly simple framer-motion, 
+                        // enabling drag on an animating element can be glitchy. 
+                        // However, we will try to just provide 'drag' and let FM handle the conflict (usually stops animation).
+                    }}
                     className="flex gap-8"
                 >
-                    {projects.map((project) => (
+                    {/* Triple the items to create illusion of infinite capability or just single loop */}
+                    {[...projects, ...projects, ...projects].map((project, idx) => (
                         <motion.div
-                            key={project.id}
-                            className="min-w-[300px] md:min-w-[400px] h-[250px] md:h-[300px] rounded-3xl overflow-hidden relative group border border-white/10 bg-[#0F0F0F]"
+                            key={`${project.id}-${idx}`}
+                            className="min-w-[300px] md:min-w-[400px] h-[250px] md:h-[300px] rounded-3xl overflow-hidden relative group border border-white/10 bg-[#0F0F0F] shrink-0"
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setSelectedProject(project)}
                         >
@@ -60,7 +82,7 @@ const ProjectCarousel = () => {
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedProject && (
-                        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+                        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)' }}>
                             {/* Overlay is the background itself to ensure coverage */}
                             <motion.div
                                 layoutId={`project-${selectedProject.id}-modal`}
