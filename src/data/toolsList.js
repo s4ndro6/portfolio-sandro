@@ -37,7 +37,7 @@ export const tools = [
     },
     {
         name: "TikTok",
-        color: "#FFFFFF", // White for dark mode
+        color: "#FFFFFF",
         desc: "Viralité et rétention.",
         icon: "https://cdn.simpleicons.org/tiktok/FFFFFF"
     },

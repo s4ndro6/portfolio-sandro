@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { tools } from '../data/tools';
+import { tools } from '../data/toolsList';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
