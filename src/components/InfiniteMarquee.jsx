@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { tools } from '../data/toolsList';
+import { tools } from '../data/tools';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
@@ -43,7 +43,7 @@ const InfiniteMarquee = () => {
                                     src={tool.icon}
                                     alt={tool.name}
                                     className="block transition-all duration-300 filter grayscale opacity-50 group-hover:filter-none group-hover:opacity-100 group-hover:scale-110"
-                                    style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
+                                    style={{ height: '35px', width: 'auto', objectFit: 'contain' }}
                                 />
                             </div>
 
