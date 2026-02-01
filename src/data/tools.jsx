@@ -6,57 +6,40 @@ export const tools = [
         color: "#F24E1E",
         desc: "Prototypage UI/UX haute fidélité. Maquettes, design systems, présentations.",
         viewBox: "0 0 24 24",
-        path: <path fill="#F24E1E" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12z" />
-        // Note: Replaced with a simplified placeholder or standard path to ensure it's not "fat". 
-        // Actually, for Figma standard SimpleIcon:
-        // d="M8.333 0v4H4.667a4 4 0 0 0 0 8H8.333v4H4.667a4 4 0 0 0 0 8H8.333v-4h3.667v4A4 4 0 0 0 16 20v-4H16a4 4 0 0 0 0-8H12V4h4a4 4 0 0 0 0-4H8.333z" is an example of a grid-based one.
-        // But to be safe and match user expectation of "SimpleIcons", I will use the standard path known for Figma if I can, or just keep the one I had if it was correct. 
-        // The user complained about distortion. I'll use the ViewBox 0 0 38 57 one again BUT ensure it renders correctly in marquee.
-        // Actually, User demanded "Official logos SVG". The previous one WAS official (colorful).
-        // I will revert Figma to the multi-path one but check the viewBox. 
-        // Figma logo is usually width < height. 38x57 is correct-ish.
-        // I will trust the user that they want "Official logos (ex: via SimpleIcons)". SimpleIcons uses monochrome 24x24 paths.
-        // I will provide the Standard Monochrome SimpleIcon path for Figma to ensure consistency (0 0 24 24).
-    },
-    {
-        name: "Figma",
-        color: "#F24E1E",
-        desc: "Prototypage UI/UX.",
-        viewBox: "0 0 24 24",
-        path: <path fill="#F24E1E" d="M12 20a4 4 0 0 1-4-4v-4h4v8zm0-12V4h3.5a3.5 3.5 0 1 1 0 7H12zm0 4h3.5a3.5 3.5 0 1 1 0 7H12v-7zM8.5 4H12v4H8.5a3.5 3.5 0 1 1 0-3.5zm0 7H12v4H8.5a3.5 3.5 0 1 1 0-3.5z" />
+        path: <><path fill="#F24E1E" d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12z" /></>
     },
     {
         name: "Photoshop",
         color: "#31A8FF",
-        desc: "Retouche photo avancée.",
+        desc: "Retouche photo avancée et composition visuelle.",
         viewBox: "0 0 24 24",
         path: <path fill="#31A8FF" d="M0 0v24h24V0H0zm19.9 4.3v15.4h-6v-1.7h2.2v-6.9H12v6.6h-2.1V7.9h2.3v-.8c0-1.8 1.4-2.8 3.3-2.8 1.5 0 2.5.5 2.5.5l-.5 1.7s-1-.4-2-.4c-.9 0-1.2.4-1.2 1v.7h2.5v1.9h-2.5v5.1h-2.3V7.9h-2.3v8.5H4.1V4.3h15.8z" />
     },
     {
         name: "Illustrator",
         color: "#FF9A00",
-        desc: "Création vectorielle.",
+        desc: "Création vectorielle pour des identités visuelles nettes.",
         viewBox: "0 0 24 24",
         path: <path fill="#FF9A00" d="M0 0v24h24V0H0zm13 18.5H4.2L6.9 8h2.3l2.7 10.5h-2l-.5-2.2H7L6.5 18.5zM8.3 14h1.7L9.2 9.6h-.1L8.3 14zm7.4 4.5h-2V8h2v10.5z" />
     },
     {
         name: "n8n",
         color: "#EA4B71",
-        desc: "Workflows d'automatisation.",
+        desc: "Workflows d'automatisation complexes connectant APIs.",
         viewBox: "0 0 24 24",
         path: <path fill="#EA4B71" d="M12.984 8.24l3.125 1.803L12.984 11.846V8.24zm-1.968 0v3.606l-3.125-1.803 3.125-1.803zM5.42 6.075L2 4.103 5.42 2.13 8.84 4.103 5.42 6.075zm13.16 0L15.16 4.103 18.58 2.13 22 4.103l-3.42 1.972zM12 21.87l-3.42-1.972 3.42-1.972 3.42 1.972L12 21.87zm-6.58-15.795L2 7.878v3.945l3.42 1.972 3.42-1.972V7.878L5.42 6.075zm13.16 0l-3.42 1.803v3.945l3.42 1.972 3.42-1.972V7.878l-3.42-1.803z" />
     },
     {
         name: "Make",
         color: "#690EB1",
-        desc: "Intégrations visuelles.",
+        desc: "Intégrations visuelles rapides.",
         viewBox: "0 0 24 24",
         path: <path fill="#690EB1" d="M8.444 8.24a4.222 4.222 0 1 0 0 8.445 4.222 4.222 0 0 0 0-8.445zm11.334 0a4.222 4.222 0 1 0 0 8.445 4.222 4.222 0 0 0 0-8.445zM8.444 0a4.222 4.222 0 1 0 0 8.444 4.222 4.222 0 0 0 0-8.444zm11.334 0a4.222 4.222 0 1 0 0 8.444 4.222 4.222 0 0 0 0-8.444z" />
     },
     {
         name: "Instagram",
         color: "#E4405F",
-        desc: "Stratégies de contenu.",
+        desc: "Stratégies de contenu visuel.",
         viewBox: "0 0 24 24",
         path: <path fill="#E4405F" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
     },
