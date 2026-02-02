@@ -4,46 +4,26 @@ import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
 /*
-  FINAL LOGO FIX: HYBRID APPROACH
-  - Ps, Ai, VS Code: Inline SVG Components (No 404s)
-  - Others: CDN URLs (Official Brands)
-  - Size: 45px Fixed Height
-  - Color: White
+  HARD RESET: BASE64 LOGOS & SPEED FIX
+  - Base64 Data URIs for Ps, Ai, VS Code (No 404s)
+  - Speed: 35s
+  - Size: 40px (Restored from "parfaite")
+  - No CSS Filters
 */
 
-// --- INLINE SVG COMPONENTS (For broken CDN links) ---
-
-const PhotoshopIcon = () => (
-    <svg role="img" viewBox="0 0 24 24" height="45" width="auto" xmlns="http://www.w3.org/2000/svg" fill="white">
-        <title>Adobe Photoshop</title>
-        <path d="M0 .034v23.932h24V.034H0zM17.5 14.354h-1.666v-3.75h1.666c.892 0 1.667.625 1.667 1.875 0 1.25-.775 1.875-1.667 1.875zM12.5 17.5h-3.333V6.25h3.333c2.75 0 5 1.5 5 4.166 0 2.25-1.583 3.75-3.75 4.042v.084c1.166.25 1.916 1.166 2.083 2.5.084.75.167 1.417.417 1.875v.083h-2.5c-.25-.417-.333-1.083-.417-1.75-.166-1.166-.833-1.583-1.833-1.583h-1.667V17.5zM10 13.75H8.333V8.75H10c.892 0 1.667.508 1.667 1.583 0 1.25-.833 1.5-1.667 1.5h-.833v1.917z" />
-    </svg>
-);
-
-const IllustratorIcon = () => (
-    <svg role="img" viewBox="0 0 24 24" height="45" width="auto" xmlns="http://www.w3.org/2000/svg" fill="white">
-        <title>Adobe Illustrator</title>
-        <path d="M0 .034v23.932h24V.034H0zM8.5 18.334l2.917-8.333h.166l2.917 8.333H12.5l-.667-2.083h-3.5l-.667 2.083H5.917zm4.25-3.333l-1.083-3.25h-.084l-1.083 3.25h2.25zm6.5 3.333h-1.667V9.5h1.667v8.834zm0-10.75h-1.667V6.084h1.667v1.5z" />
-    </svg>
-);
-
-const VSCodeIcon = () => (
-    <svg role="img" viewBox="0 0 24 24" height="45" width="auto" xmlns="http://www.w3.org/2000/svg" fill="white">
-        <title>Visual Studio Code</title>
-        <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.291L6.94 12.283l-4.174-3.14a.735.735 0 0 0-.895.071L.17 10.6a.733.733 0 0 0 .165 1.171l5.584 3.09 5.588 3.076 9.577 12.003a1.494 1.494 0 0 0 1.705.29L23.15 21.4a1.496 1.496 0 0 0 .85-1.347v-16.12a1.496 1.496 0 0 0-.85-1.346z" />
-    </svg>
-);
-
-// --- TOOLS DATA (Mixed: Component or String) ---
+// Provided Base64 Strings + Generated VS Code
+const LOGO_PS = "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+QWRvYmUgUGhvdG9zaG9wPC90aXRsZT48cGF0aCBkPSJNMCAwdjI0aDI0VjBIMHptNi42NSA4LjA3OGMuOTY3IDAgMS42NDcuMjc2IDEuODk0LjY0NmwuMDM5IDEuMTUxaC0uMDM5Yy0uMzU0LS43ODctMS4wODItMS4xMTctMS44NjUtMS4xMTctMS4zNzcgMC0yLjI3OCAxLjA1My0yLjI3OCAyLjY0NyAwIDEuNjkyLjk1OSAyLjY2NyAyLjI3OCAyLjY2Ny44MDcgMCAxLjQyNy0uMjk2IDEuODEzLS44MjhoLjAzOXYuNzU5Yy0uMzI1LjY0MS0xLjI0OC45NzUtMi4xOTcuOTc1LTIuMzc3IDAtMy42NTEtMS41NzctMy42NTEtMy42MTQgMC0yLjE4OCAxLjQxNy0zLjI5NSAzLjk1Mi0zLjI5NXptOS4yNiAzLjM5MWMwIDEuNTM3LS42OCAyLjIwNi0yLjA3OCAyLjIwNi0uNDQzIDAtLjg2Ny0uMTI4LTEuMTkyLS4zMTVsLjEyOC0uOTg1Yy4yMjYuMTA4LjU2MS4yMTcuODk2LjIxNy42NzkgMCAxLjA0NC0uMjk1IDEuMDQ0LS45ODV2LS4xODdjLS40MzMuNTMxLS45OTQuNzM4LTEuNTg1LjczOC0xLjM2OSAwLTIuMTc3LS45ODUtMi4xNzctMi41NzEgMC0xLjgyMiAxLjA0NC0yLjcwOCAyLjI2NS0yLjcwOC42NTkgMCAxLjE5MS4yMjYgMS41MzcuNjc5aC4wMzl2LS41NjFoMS4xMjd2NC4xMjF6bS0yLjY5OC0xLjk5OWMtLjY3OSAwLTEuMTQyLjUzMS0xLjE0MiAxLjU1NiAwIDEuMDE0LjQxMyAxLjUxNyAxLjA3NCAxLjUxNy42NTkgMCAxLjA5My0uNTIxIDEuMDkzLTEuNDg3IDAtMS4wMTUtLjQzMy0xLjU4Ni0xLjAyNS0xLjU4NnoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=";
+const LOGO_AI = "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+QWRvYmUgSWxsdXN0cmF0b3I8L3RpdGxlPjxwYXRoIGQ9Ik0wIDB2MjRoMjRWMEgwem02Ljc3NCAxNS4xMjhoLTEuNDhsLS4zODQtMS4yNkgzLjI2MmwtLjM3NCAxLjI2SDEuNDFMNC4wNjQgOC43M2gxLjI5bDIuNDIgNi4zOTh6bS0yLjE0Ny0yLjE4N0wzLjgzNSAxMC4zM2wtLjgxIDIuNjExaDEuNjAyem03LjYzMiAyLjE4N7gtMS4zMThWOC43M2gxLjMxOHY2LjM5OHptMCAxLjg4OGgtMS4zMTh2LTEuMzgzaDEuMzE4djEuMzgzem00Ljk3My0xLjg4OGgtMS4zMThWOC43M2gxLjMxOHY2LjM5OHptMCAxLjg4OGgtMS4zMTh2LTEuMzgzaDEuMzE4djEuMzgzem00LjA4NC0xLjg4OGgtMS4zMThWOC43M2gxLjMxOHY2LjM5OHptMCAxLjg4OGgtMS4zMTh2LTEuMzgzaDEuMzE4djEuMzgzeiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==";
+const LOGO_VSCODE = "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+VmlzdWFsIFN0dWRpbyBDb2RlPC90aXRsZT48cGF0aCBkPSJNMjMuMTUgMi41ODdMMTguMjEuMjFhMS40OTQgMS40OTQgMCAwIDAtMS43MDUuMjkxTDYuOTQgMTIuMjgzbC00LjE3NC0zLjE0YS43MzUuNzM1IDAgMCAwLS44OTUuMDcxTC4xNyAxMC42YS43MzMuNzMzIDAgMCAwIC4xNjUgMS4xNzFsNS41ODQgMy4wOSA1LjU4OCAzLjA3NiA5LjU3NyAxMi4wMDNhMS40OTQgMS40OTQgMCAwIDAgMS43MDUuMjlMMjMuMTUgMjEuNGExLjQ5NiAxLjQ5NiAwIDAgMCAuODUtMS4zNDd2LTE2LjEyYTEuNDk2IDEuNDk2IDAgMCAwLS44NS0xLjM0NnoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=";
 
 const tools = [
-    { name: 'Figma', icon: "https://cdn.simpleicons.org/figma/white", type: 'url', color: "#F24E1E", desc: "Prototypage UI/UX haute fidélité." },
-    { name: 'Photoshop', icon: <PhotoshopIcon />, type: 'component', color: "#31A8FF", desc: "Retouche photo avancée." },
-    { name: 'Illustrator', icon: <IllustratorIcon />, type: 'component', color: "#FF9A00", desc: "Création vectorielle." },
-    { name: 'VS Code', icon: <VSCodeIcon />, type: 'component', color: "#007ACC", desc: "Développement." },
-    { name: 'Gemini', icon: "https://cdn.simpleicons.org/googlegemini/white", type: 'url', color: "#412991", desc: "IA et Code." },
-    { name: 'Instagram', icon: "https://cdn.simpleicons.org/instagram/white", type: 'url', color: "#E4405F", desc: "Stratégies de contenu." },
-    { name: 'TikTok', icon: "https://cdn.simpleicons.org/tiktok/white", type: 'url', color: "#FFFFFF", desc: "Viralité et rétention." }
+    { name: 'Figma', icon: "https://cdn.simpleicons.org/figma/white", color: "#F24E1E", desc: "Prototypage UI/UX haute fidélité." },
+    { name: 'Photoshop', icon: LOGO_PS, color: "#31A8FF", desc: "Retouche photo avancée." },
+    { name: 'Illustrator', icon: LOGO_AI, color: "#FF9A00", desc: "Création vectorielle." },
+    { name: 'VS Code', icon: LOGO_VSCODE, color: "#007ACC", desc: "Développement." },
+    { name: 'Gemini', icon: "https://cdn.simpleicons.org/googlegemini/white", color: "#412991", desc: "IA et Code." },
+    { name: 'Instagram', icon: "https://cdn.simpleicons.org/instagram/white", color: "#E4405F", desc: "Stratégies de contenu." },
+    { name: 'TikTok', icon: "https://cdn.simpleicons.org/tiktok/white", color: "#FFFFFF", desc: "Viralité et rétention." }
 ];
 
 const InfiniteMarquee = () => {
@@ -77,19 +57,17 @@ const InfiniteMarquee = () => {
                             className="flex-shrink-0 cursor-pointer group flex items-center justify-center relative"
                             onClick={() => setSelectedTool(tool)}
                         >
-                            <div className="flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                                {tool.type === 'url' ? (
-                                    <img
-                                        src={tool.icon}
-                                        alt={tool.name}
-                                        className="block object-contain"
-                                        style={{ height: '45px', width: 'auto', filter: 'none' }}
-                                    />
-                                ) : (
-                                    // Render Component (Ps, Ai, VS Code)
-                                    tool.icon
-                                )}
-                            </div>
+                            <img
+                                src={tool.icon}
+                                alt={tool.name}
+                                className="block transition-all duration-300 group-hover:scale-110"
+                                style={{
+                                    height: '40px', // Restored to 40px "Perfect" size as requested
+                                    width: 'auto',
+                                    objectFit: 'contain',
+                                    filter: 'none'
+                                }}
+                            />
 
                             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-30">
                                 {tool.name}
@@ -114,18 +92,11 @@ const InfiniteMarquee = () => {
                                 <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>
 
                                 <div className="w-24 h-24 mb-6 flex items-center justify-center p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    {tool.type === 'url' ? (
-                                        <img
-                                            src={selectedTool.icon}
-                                            alt={selectedTool.name}
-                                            className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-                                        />
-                                    ) : (
-                                        // Clone clone for sizing if needed, or just render. For modal we want it big.
-                                        // The inline components have height=45 prop, but here we want them to fill the container.
-                                        // We can clone and overwrite height/width.
-                                        React.cloneElement(selectedTool.icon, { height: "100%", width: "100%" })
-                                    )}
+                                    <img
+                                        src={selectedTool.icon}
+                                        alt={selectedTool.name}
+                                        className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                                    />
                                 </div>
 
                                 <h4 className="text-2xl font-black text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>

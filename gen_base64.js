@@ -1,0 +1,2 @@
+const svg = `<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Visual Studio Code</title><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.291L6.94 12.283l-4.174-3.14a.735.735 0 0 0-.895.071L.17 10.6a.733.733 0 0 0 .165 1.171l5.584 3.09 5.588 3.076 9.577 12.003a1.494 1.494 0 0 0 1.705.29L23.15 21.4a1.496 1.496 0 0 0 .85-1.347v-16.12a1.496 1.496 0 0 0-.85-1.346z" fill="#ffffff"/></svg>`;
+console.log(Buffer.from(svg).toString('base64'));
