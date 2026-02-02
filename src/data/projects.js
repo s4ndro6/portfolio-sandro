@@ -116,7 +116,7 @@ export const projects = [
     id: 10,
     title: "IA Génératrice Art",
     role: "AI Engineer",
-    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800",
     shortDesc: "Plateforme de génération d'images par IA.",
     brief: "Rendre la création d'art génératif accessible.",
     reflection: "Optimisation des temps d'inférence.",

@@ -37,7 +37,7 @@ const ProjectCarousel = () => {
                         x: {
                             repeat: Infinity,
                             repeatType: "loop",
-                            duration: 40, // Adjust speed here
+                            duration: 80, // Slower smooth scroll
                             ease: "linear",
                         },
                     }}
