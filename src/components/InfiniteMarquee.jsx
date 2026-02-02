@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-// import { tools } from '../data/tools'; // External data removed as requested
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
-// Logo Array Hardcoded locally for strict control
 const tools = [
     { name: 'Figma', icon: "https://cdn.simpleicons.org/figma/white", color: "#F24E1E", desc: "Prototypage UI/UX haute fidélité." },
     { name: 'Photoshop', icon: "https://cdn.simpleicons.org/adobephotoshop/white", color: "#31A8FF", desc: "Retouche photo avancée." },
@@ -23,11 +21,9 @@ const InfiniteMarquee = () => {
 
     return (
         <div className="relative border-y border-white/5 bg-white/5 backdrop-blur-md overflow-hidden z-20 flex items-center justify-center h-[120px] w-full">
-            {/* Dégradés latéraux (Optionnel mais garde l'esthétique "Pro") */}
             <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0F0F0F] to-transparent z-10 pointer-events-none" />
 
-            {/* MARQUEE CONTAINER */}
             <div
                 className="flex w-full overflow-hidden items-center justify-center"
                 onMouseEnter={() => setIsHovered(true)}
@@ -43,7 +39,6 @@ const InfiniteMarquee = () => {
                         alignItems: 'center'
                     }}
                 >
-                    {/* Items */}
                     {[...tools, ...tools, ...tools, ...tools].map((tool, idx) => (
                         <div
                             key={idx}
@@ -51,9 +46,8 @@ const InfiniteMarquee = () => {
                             onClick={() => setSelectedTool(tool)}
                         >
                             <div className="flex items-center justify-center transition-all duration-300">
-                                {/* LOGO IMG - PURE WHITE FILTER */}
                                 <img
-                                    src={String(tool.icon)}
+                                    src={tool.icon}
                                     alt={tool.name}
                                     className="block transition-all duration-300 group-hover:scale-110"
                                     style={{
@@ -64,7 +58,6 @@ const InfiniteMarquee = () => {
                                 />
                             </div>
 
-                            {/* Tooltip Survol */}
                             <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-30">
                                 {tool.name}
                             </span>
@@ -73,13 +66,10 @@ const InfiniteMarquee = () => {
                 </motion.div>
             </div>
 
-            {/* MODALE DÉTAILS - PORTAL (FIXED CENTERED STACK) */}
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
                     {selectedTool && (
                         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}>
-                            {/* Overlay merged/container */}
-
                             <motion.div
                                 layoutId={`tool-${selectedTool.name}-modal`}
                                 initial={{ opacity: 0, scale: 0.9 }}
@@ -102,7 +92,6 @@ const InfiniteMarquee = () => {
                                 <p className="text-gray-400 text-sm leading-relaxed font-light">{selectedTool.desc}</p>
                             </motion.div>
 
-                            {/* Click anywhere outside content to close */}
                             <div className="absolute inset-0 z-[-1]" onClick={() => setSelectedTool(null)} />
                         </div>
                     )}
