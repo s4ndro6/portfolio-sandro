@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
-// Logo Array Hardcoded locally for strict control - DOUBLE QUOTED STRINGS
+// HARDCODED LOGOS - STRICT STRINGS ONLY
 const tools = [
     { name: 'Figma', icon: "https://cdn.simpleicons.org/figma/white", color: "#F24E1E", desc: "Prototypage UI/UX haute fidélité." },
     { name: 'Photoshop', icon: "https://cdn.simpleicons.org/adobephotoshop/white", color: "#31A8FF", desc: "Retouche photo avancée." },
