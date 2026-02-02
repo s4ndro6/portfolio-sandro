@@ -71,7 +71,7 @@ function App() {
                 <button onClick={handleBackToBio} className="hidden md:flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors">
                   <User size={16} /> Bio
                 </button>
-                <a href="/cv.pdf" target="_blank" className="hidden md:flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mr-4">
+                <a href="/images/cv.pdf" target="_blank" className="hidden md:flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors mr-4">
                   CV
                 </a>
                 <a href="#contact" className="px-6 py-2 bg-white text-black rounded-full text-xs font-bold uppercase hover:scale-105 transition-transform">
