@@ -3,15 +3,68 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
-// CLEAN LOGOS - WHITE CDN URLS (/fff) - FIXED LIST OF 7
+/* 
+  ULTIMATE FIX: INLINE SVG COMPONENTS
+  - No external images
+  - No CSS filters
+  - Pure White SVG Paths
+  - Fixed 40px Height
+*/
+
+const LOGOS_DATA = {
+    Figma: (
+        <svg role="img" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <title>Figma</title>
+            <path d="M8.12 16.5A3.49 3.49 0 0 1 11.5 19.99A3.49 3.49 0 0 1 8.12 23.5A3.5 3.5 0 0 1 4.62 19.99A3.49 3.49 0 0 1 8.12 16.5M11.5 13.01H8.12A3.5 3.5 0 0 1 4.62 9.51A3.49 3.49 0 0 1 8.12 6.01H11.5V13.01H12V6.01L12.01 6.01H15.51A3.49 3.49 0 0 1 18.89 9.51A3.49 3.49 0 0 1 15.51 13.01H11.5M8.12 6A3.49 3.49 0 0 1 11.5 2.5A3.49 3.49 0 0 1 14.89 6H8.12M15.51 2.5A3.49 3.49 0 0 1 18.89 6H15.51V2.5Z" />
+        </svg>
+    ),
+    Photoshop: (
+        <svg role="img" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <title>Adobe Photoshop</title>
+            <path d="M0 .034v23.932h24V.034H0zM17.5 14.354h-1.666v-3.75h1.666c.892 0 1.667.625 1.667 1.875 0 1.25-.775 1.875-1.667 1.875zM12.5 17.5h-3.333V6.25h3.333c2.75 0 5 1.5 5 4.166 0 2.25-1.583 3.75-3.75 4.042v.084c1.166.25 1.916 1.166 2.083 2.5.084.75.167 1.417.417 1.875v.083h-2.5c-.25-.417-.333-1.083-.417-1.75-.166-1.166-.833-1.583-1.833-1.583h-1.667V17.5zM10 13.75H8.333V8.75H10c.892 0 1.667.508 1.667 1.583 0 1.25-.833 1.5-1.667 1.5h-.833v1.917z" />
+        </svg>
+    ),
+    Illustrator: (
+        <svg role="img" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <title>Adobe Illustrator</title>
+            <path d="M0 .034v23.932h24V.034H0zM8.5 18.334l2.917-8.333h.166l2.917 8.333H12.5l-.667-2.083h-3.5l-.667 2.083H5.917zm4.25-3.333l-1.083-3.25h-.084l-1.083 3.25h2.25zm6.5 3.333h-1.667V9.5h1.667v8.834zm0-10.75h-1.667V6.084h1.667v1.5z" />
+        </svg>
+    ),
+    VSCode: (
+        <svg role="img" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <title>Visual Studio Code</title>
+            <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.291L6.94 12.283l-4.174-3.14a.735.735 0 0 0-.895.071L.17 10.6a.733.733 0 0 0 .165 1.171l5.584 3.09 5.588 3.076 9.577 12.003a1.494 1.494 0 0 0 1.705.29L23.15 21.4a1.496 1.496 0 0 0 .85-1.347v-16.12a1.496 1.496 0 0 0-.85-1.346z" />
+        </svg>
+    ),
+    Gemini: (
+        <svg role="img" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <title>Google Gemini</title>
+            <path d="M12 24c0-6 4-10 10-12-6-2-10-6-10-12-2 6-6 10-12 12 6 2 10 6 12 12z" />
+        </svg>
+    ),
+    Instagram: (
+        <svg role="img" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <title>Instagram</title>
+            <path d="M7.03021 2.73012C5.07492 2.73012 3.48972 4.31631 3.48972 6.2706V17.7295C3.48972 19.6848 5.07492 21.2709 7.03021 21.2709H16.9688C18.9251 21.2709 20.5093 19.6848 20.5093 17.7295V6.2706C20.5093 4.31631 18.9251 2.73012 16.9688 2.73012H7.03021ZM11.9995 7.15286C14.6738 7.15286 16.8467 9.32577 16.8467 12.0001C16.8467 14.6743 14.6738 16.8472 11.9995 16.8472C9.32524 16.8472 7.15234 14.6743 7.15234 12.0001C7.15234 9.32577 9.32524 7.15286 11.9995 7.15286ZM16.9688 5.64188C17.3986 5.64188 17.7469 5.99021 17.7469 6.42004C17.7469 6.84988 17.3986 7.1982 16.9688 7.1982C16.539 7.1982 16.1906 6.84988 16.1906 6.42004C16.1906 5.99021 16.539 5.64188 16.9688 5.64188ZM11.9995 8.70908C10.1818 8.70908 8.70857 10.1824 8.70857 12.0001C8.70857 13.8177 10.1818 15.291 11.9995 15.291C13.8172 15.291 15.2905 13.8177 15.2905 12.0001C15.2905 10.1824 13.8172 8.70908 11.9995 8.70908Z" />
+        </svg>
+    ),
+    TikTok: (
+        <svg role="img" viewBox="0 0 24 24" height="40" width="40" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <title>TikTok</title>
+            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.76v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.46-.54 2.94-1.34 4.14-1.1 1.66-2.85 2.85-4.83 3.03-3.1.28-6.07-1.78-6.66-4.79-.58-2.93 1.16-5.91 4.02-6.84.47-.15.96-.24 1.45-.25v4.2c-.32-.01-.66.07-.94.22-.61.32-.97.98-.95 1.67.01.76.43 1.45 1.12 1.74.83.35 1.83.1 2.45-.64.39-.46.58-1.04.57-1.64.01-4.78.01-9.56-.01-14.35-.11-1.11.23-2.28.9-3.14.39-.49.88-.91 1.16-1.14z" />
+        </svg>
+    )
+};
+
+// Tools List referencing the Data
 const tools = [
-    { name: 'Figma', icon: "https://cdn.simpleicons.org/figma/fff", color: "#F24E1E", desc: "Prototypage UI/UX haute fidélité." },
-    { name: 'Photoshop', icon: "https://cdn.simpleicons.org/adobephotoshop/fff", color: "#31A8FF", desc: "Retouche photo avancée." },
-    { name: 'Illustrator', icon: "https://cdn.simpleicons.org/adobeillustrator/fff", color: "#FF9A00", desc: "Création vectorielle." },
-    { name: 'VS Code', icon: "https://cdn.simpleicons.org/visualstudiocode/fff", color: "#007ACC", desc: "Développement." },
-    { name: 'Gemini', icon: "https://cdn.simpleicons.org/googlegemini/fff", color: "#412991", desc: "IA et Code." },
-    { name: 'Instagram', icon: "https://cdn.simpleicons.org/instagram/fff", color: "#E4405F", desc: "Stratégies de contenu." },
-    { name: 'TikTok', icon: "https://cdn.simpleicons.org/tiktok/fff", color: "#FFFFFF", desc: "Viralité et rétention." }
+    { name: 'Figma', icon: LOGOS_DATA.Figma, color: "#F24E1E", desc: "Prototypage UI/UX haute fidélité." },
+    { name: 'Photoshop', icon: LOGOS_DATA.Photoshop, color: "#31A8FF", desc: "Retouche photo avancée." },
+    { name: 'Illustrator', icon: LOGOS_DATA.Illustrator, color: "#FF9A00", desc: "Création vectorielle." },
+    { name: 'VS Code', icon: LOGOS_DATA.VSCode, color: "#007ACC", desc: "Développement." },
+    { name: 'Gemini', icon: LOGOS_DATA.Gemini, color: "#412991", desc: "IA et Code." },
+    { name: 'Instagram', icon: LOGOS_DATA.Instagram, color: "#E4405F", desc: "Stratégies de contenu." },
+    { name: 'TikTok', icon: LOGOS_DATA.TikTok, color: "#FFFFFF", desc: "Viralité et rétention." }
 ];
 
 const InfiniteMarquee = () => {
@@ -29,9 +82,9 @@ const InfiniteMarquee = () => {
                 onMouseLeave={() => setIsHovered(false)}
             >
                 <motion.div
-                    className="flex items-center min-w-full"
+                    className="flex items-center min-w-full gap-12" // GAP-12 Added
                     animate={{ x: ["0%", "-50%"] }}
-                    transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+                    transition={{ duration: 35, ease: "linear", repeat: Infinity }} // 35s Duration
                     style={{
                         animationPlayState: isHovered ? "paused" : "running",
                         display: 'flex',
@@ -41,24 +94,14 @@ const InfiniteMarquee = () => {
                     {[...tools, ...tools, ...tools, ...tools].map((tool, idx) => (
                         <div
                             key={idx}
-                            className="flex-shrink-0 mx-10 cursor-pointer group flex items-center justify-center p-4 relative"
+                            className="flex-shrink-0 cursor-pointer group flex items-center justify-center relative"
                             onClick={() => setSelectedTool(tool)}
                         >
-                            <div className="flex items-center justify-center transition-all duration-300">
-                                <img
-                                    src={tool.icon}
-                                    alt={tool.name}
-                                    className="block transition-all duration-300 group-hover:scale-110"
-                                    style={{
-                                        height: '40px', // Requested 40px fixed height
-                                        width: 'auto',
-                                        objectFit: 'contain',
-                                        filter: 'none' // Explicitly removing filters as requested
-                                    }}
-                                />
+                            <div className="flex items-center justify-center transition-all duration-300 group-hover:scale-110 h-10 w-10"> {/* Fixed h-10 w-10 container */}
+                                {tool.icon}
                             </div>
 
-                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-30">
+                            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-30">
                                 {tool.name}
                             </span>
                         </div>
@@ -80,12 +123,9 @@ const InfiniteMarquee = () => {
                             >
                                 <button onClick={() => setSelectedTool(null)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-full p-1"><X size={16} /></button>
 
-                                <div className="w-20 h-20 mb-6 flex items-center justify-center p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <img
-                                        src={selectedTool.icon}
-                                        alt={selectedTool.name}
-                                        className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-                                    />
+                                <div className="w-20 h-20 mb-6 flex items-center justify-center p-4 bg-white/5 rounded-2xl border border-white/5 text-white">
+                                    {/* Clone for larger Modal size */}
+                                    {React.cloneElement(selectedTool.icon, { height: "60", width: "60" })}
                                 </div>
 
                                 <h4 className="text-2xl font-black text-white mb-2" style={{ color: selectedTool.color }}>{selectedTool.name}</h4>
