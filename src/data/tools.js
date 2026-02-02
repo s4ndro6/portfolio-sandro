@@ -6,6 +6,6 @@ export const tools = [
     { name: 'Make', icon: 'https://cdn.simpleicons.org/make/white', color: "#690EB1", desc: "Intégrations visuelles." },
     { name: 'Instagram', icon: 'https://cdn.simpleicons.org/instagram/white', color: "#E4405F", desc: "Stratégies de contenu." },
     { name: 'TikTok', icon: 'https://cdn.simpleicons.org/tiktok/white', color: "#FFFFFF", desc: "Viralité et rétention." },
-    { name: 'VS Code', icon: '/images/Visual Studio Code logo in vector format - Brandlogos_net.jpeg', color: "#007ACC", desc: "Développement." },
-    { name: 'OpenAI', icon: '/images/logo gemini new.jpeg', color: "#412991", desc: "IA et Code." }
+    { name: 'VS Code', icon: 'https://cdn.simpleicons.org/visualstudiocode/white', color: "#007ACC", desc: "Développement." },
+    { name: 'OpenAI', icon: 'https://cdn.simpleicons.org/openai/white', color: "#412991", desc: "IA et Code." }
 ];

@@ -85,7 +85,7 @@ const IntroHero = ({ onContinue }) => {
             </motion.div>
           </button>
 
-          <a href="/cv.pdf" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all font-bold uppercase text-xs tracking-widest flex items-center gap-2 group">
+          <a href="/images/cv.pdf" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all font-bold uppercase text-xs tracking-widest flex items-center gap-2 group" download>
             <span className="group-hover:scale-105 transition-transform">Télécharger mon CV</span>
           </a>
         </motion.div>

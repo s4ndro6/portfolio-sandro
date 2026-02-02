@@ -24,7 +24,7 @@ const InfiniteMarquee = () => {
                 <motion.div
                     className="flex items-center min-w-full"
                     animate={{ x: ["0%", "-50%"] }}
-                    transition={{ duration: 100, ease: "linear", repeat: Infinity }}
+                    transition={{ duration: 120, ease: "linear", repeat: Infinity }}
                     style={{
                         animationPlayState: isHovered ? "paused" : "running",
                         display: 'flex',
@@ -47,9 +47,7 @@ const InfiniteMarquee = () => {
                                     style={{
                                         height: '35px',
                                         width: 'auto',
-                                        objectFit: 'contain',
-                                        filter: 'grayscale(1) brightness(1.5)',
-                                        mixBlendMode: 'screen'
+                                        objectFit: 'contain'
                                     }}
                                 />
                             </div>
