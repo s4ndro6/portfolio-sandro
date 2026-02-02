@@ -24,7 +24,7 @@ const InfiniteMarquee = () => {
                 <motion.div
                     className="flex items-center min-w-full"
                     animate={{ x: ["0%", "-50%"] }}
-                    transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+                    transition={{ duration: 60, ease: "linear", repeat: Infinity }}
                     style={{
                         animationPlayState: isHovered ? "paused" : "running",
                         display: 'flex',
@@ -39,7 +39,7 @@ const InfiniteMarquee = () => {
                             onClick={() => setSelectedTool(tool)}
                         >
                             <div className="flex items-center justify-center transition-all duration-300">
-                                {/* LOGO IMG - CDN STRICT STRING + BLEND MODE FIX */}
+                                {/* LOGO IMG - PURE WHITE FILTER */}
                                 <img
                                     src={String(tool.icon)}
                                     alt={tool.name}
@@ -48,8 +48,7 @@ const InfiniteMarquee = () => {
                                         height: '35px',
                                         width: 'auto',
                                         objectFit: 'contain',
-                                        filter: 'grayscale(1) brightness(2)',
-                                        mixBlendMode: 'screen'
+                                        filter: 'brightness(0) invert(1)'
                                     }}
                                 />
                             </div>
