@@ -39,12 +39,18 @@ const InfiniteMarquee = () => {
                             onClick={() => setSelectedTool(tool)}
                         >
                             <div className="flex items-center justify-center transition-all duration-300">
-                                {/* LOGO IMG - CDN STRICT STRING */}
+                                {/* LOGO IMG - CDN STRICT STRING + BLEND MODE FIX */}
                                 <img
                                     src={String(tool.icon)}
                                     alt={tool.name}
-                                    className="block transition-all duration-300 filter grayscale opacity-50 group-hover:filter-none group-hover:opacity-100 group-hover:scale-110"
-                                    style={{ height: '35px', width: 'auto', objectFit: 'contain' }}
+                                    className="block transition-all duration-300 group-hover:scale-110"
+                                    style={{
+                                        height: '35px',
+                                        width: 'auto',
+                                        objectFit: 'contain',
+                                        filter: 'grayscale(1) brightness(2)',
+                                        mixBlendMode: 'screen'
+                                    }}
                                 />
                             </div>
 
