@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Flame, Users, X, ShieldCheck } from 'lucide-react'; // Using Flame as FireExtinguisher proxy if needed, or stick to generic
+import { Flame, Users, X, ShieldCheck } from 'lucide-react';
+import { createPortal } from 'react-dom';
 import { experiences } from '../data/experiences';
 
 const Experiences = () => {
@@ -49,18 +50,18 @@ const Experiences = () => {
                 </div>
 
                 <AnimatePresence>
-                    {selectedExp && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                    {selectedExp && typeof document !== 'undefined' && createPortal(
+                        <>
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 onClick={() => setSelectedExp(null)}
-                                className="absolute inset-0 bg-black/90 backdrop-blur-lg"
+                                className="fixed inset-0 bg-black/90 backdrop-blur-lg z-[99]"
                             />
                             <motion.div
                                 layoutId={`exp-${selectedExp.id}`}
-                                className="bg-[#0F0F0F] border border-white/10 w-full max-w-2xl p-8 md:p-12 rounded-3xl relative z-10"
+                                className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] w-full max-w-2xl p-8 md:p-12 bg-[#0F0F0F] border border-white/10 rounded-3xl"
                             >
                                 <button onClick={() => setSelectedExp(null)} className="absolute top-6 right-6 text-white hover:text-[#E91E63]"><X /></button>
 
@@ -81,7 +82,8 @@ const Experiences = () => {
                                     </p>
                                 </div>
                             </motion.div>
-                        </div>
+                        </>,
+                        document.body
                     )}
                 </AnimatePresence>
             </div>
