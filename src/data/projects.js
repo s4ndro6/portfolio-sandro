@@ -139,7 +139,7 @@ export const projects = [
   {
     id: 12,
     title: "Smart Home Dashboard",
-    role: "IoT Developer",
+    role: "IoT Developer ",
     image: "https://images.unsplash.com/photo-1558002038-103792e17734?auto=format&fit=crop&w=800",
     shortDesc: "Contrôle domotique centralisé.",
     brief: "Connecter tous les objets intelligents de la maison.",
