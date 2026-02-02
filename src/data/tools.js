@@ -7,5 +7,5 @@ export const tools = [
     { name: 'Instagram', icon: 'https://cdn.simpleicons.org/instagram/white', color: "#E4405F", desc: "Stratégies de contenu." },
     { name: 'TikTok', icon: 'https://cdn.simpleicons.org/tiktok/white', color: "#FFFFFF", desc: "Viralité et rétention." },
     { name: 'VS Code', icon: 'https://cdn.simpleicons.org/visualstudiocode/white', color: "#007ACC", desc: "Développement." },
-    { name: 'OpenAI', icon: 'https://cdn.simpleicons.org/openai/white', color: "#412991", desc: "IA et Code." }
+    { name: 'Gemini', icon: 'https://cdn.simpleicons.org/googlegemini/white', color: "#412991", desc: "IA et Code." }
 ];
