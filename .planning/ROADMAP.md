@@ -31,7 +31,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The palette (#020804 background, #00FF88 accent, Syne ExtraBold) is visually applied
   4. Lenis smooth scroll is active — page scroll feels damped, not native-jerky
   5. All 7 project entries and full data (timeline, skills) are importable from content.ts
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Vite scaffold + npm install all dependencies + copy 5 images to public/images/
+- [ ] 01-02-PLAN.md — globals.css palette + content.ts data layer + TextScramble utility
+- [ ] 01-03-PLAN.md — React Router (4 routes) + page stubs + useLenis GSAP-synced hook
 
 ### Phase 2: Layout Core
 **Goal**: Every page is wrapped in the interactive chrome that defines the site's identity before any content is built
@@ -103,7 +108,7 @@ Note: Phase 4 depends only on Phase 1 and can be executed in parallel with Phase
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 1/3 | In Progress|  |
 | 2. Layout Core | 0/TBD | Not started | - |
 | 3. Hero | 0/TBD | Not started | - |
 | 4. Canvas Assets | 0/TBD | Not started | - |
