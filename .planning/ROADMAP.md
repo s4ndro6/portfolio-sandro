@@ -12,7 +12,7 @@ Six phases build a cinematic brutalist portfolio from bare scaffold to Vercel-re
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Vite/React/TS scaffold, globals, routing, data, utilities
+- [x] **Phase 1: Foundation** - Vite/React/TS scaffold, globals, routing, data, utilities (completed 2026-03-08)
 - [ ] **Phase 2: Layout Core** - Cursor, bootloader, page transitions, navbar, statusbar, noise overlay
 - [ ] **Phase 3: Hero** - WebGL shader background, tilt photo, hero layout, typewriter, text scramble
 - [ ] **Phase 4: Canvas Assets** - Four animated canvas components for projects without images
@@ -108,7 +108,7 @@ Note: Phase 4 depends only on Phase 1 and can be executed in parallel with Phase
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/3 | In Progress|  |
+| 1. Foundation | 3/3 | Complete   | 2026-03-08 |
 | 2. Layout Core | 0/TBD | Not started | - |
 | 3. Hero | 0/TBD | Not started | - |
 | 4. Canvas Assets | 0/TBD | Not started | - |

@@ -9,8 +9,8 @@
 
 - [x] **FOUND-01**: Projet Vite + React 18 + TypeScript initialisé avec toutes les dépendances (GSAP, Three.js, Framer Motion, Lenis, React Router)
 - [x] **FOUND-02**: globals.css avec palette V4 complète (variables CSS), utilities, grain texture, font imports (Syne, DM Sans, JetBrains Mono)
-- [ ] **FOUND-03**: Lenis smooth scroll configuré et synchronisé avec GSAP ticker
-- [ ] **FOUND-04**: React Router configuré avec routes Home, Projects, About, Contact
+- [x] **FOUND-03**: Lenis smooth scroll configuré et synchronisé avec GSAP ticker
+- [x] **FOUND-04**: React Router configuré avec routes Home, Projects, About, Contact
 - [x] **FOUND-05**: content.ts avec tous les projets (7), timeline (4), skills (4 catégories) et données complètes
 - [x] **FOUND-06**: Utilitaire TextScramble (textScramble.ts) implémenté avec chars ABCDEF...
 - [x] **FOUND-07**: Images copiées dans public/images/ (sandro.jpg, pulse_digital.png, avant-apres.png, magazine.png, 491shots_so.png)
@@ -88,8 +88,8 @@
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
-| FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Complete |
+| FOUND-04 | Phase 1 | Complete |
 | FOUND-05 | Phase 1 | Complete |
 | FOUND-06 | Phase 1 | Complete |
 | FOUND-07 | Phase 1 | Complete |
