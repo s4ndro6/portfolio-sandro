@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-01-PLAN.md — Vite scaffold + images
-last_updated: "2026-03-08T12:22:01.264Z"
-last_activity: 2026-03-08 — Roadmap created, all 35 requirements mapped across 6 phases
+stopped_at: Completed 01-02-PLAN.md — Design System & Data Layer
+last_updated: "2026-03-08T12:30:00.000Z"
+last_activity: 2026-03-08 — globals.css, content.ts, TextScramble, generateProjectCanvas stub created
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 33
+  completed_plans: 2
+  percent: 67
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-08)
 ## Current Position
 
 Phase: 1 of 6 (Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-08 — Roadmap created, all 35 requirements mapped across 6 phases
+Plan: 2 of 3 in current phase
+Status: In progress
+Last activity: 2026-03-08 — 01-02 complete: globals.css, content.ts, TextScramble, canvas stub
 
-Progress: [███░░░░░░░] 33%
+Progress: [██████░░░░] 67%
 
 ## Performance Metrics
 
@@ -51,6 +51,7 @@ Progress: [███░░░░░░░] 33%
 
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 2 | 2 tasks | 14 files |
+| Phase 01-foundation P02 | 8 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - All: Lenis smooth scroll synced with GSAP ticker (not native scroll)
 - [Phase 01-foundation]: Scaffold via temp dir copy: npm create vite refuses non-empty directories; scaffolded in temp then copied files manually
 - [Phase 01-foundation]: pulse_digital.png rename: space-to-underscore for URL-safe asset access
+- [Phase 01-foundation P02]: globals.css imported before index.css in main.tsx so design tokens take precedence
+- [Phase 01-foundation P02]: mediaType uses string literal union type for type-safe Phase 4 canvas discrimination
+- [Phase 01-foundation P02]: TextScramble uses setInterval at 28ms with 0.35 step matching brief's exact timing spec
 
 ### Pending Todos
 
@@ -77,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-08T12:22:01.262Z
-Stopped at: Completed 01-01-PLAN.md — Vite scaffold + images
+Last session: 2026-03-08T12:30:00.000Z
+Stopped at: Completed 01-02-PLAN.md — Design System & Data Layer
 Resume file: None
