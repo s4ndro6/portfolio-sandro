@@ -1,0 +1,25 @@
+/* ============================================================
+   AAZ Portfolio V4 — useMousePosition Hook (stub)
+   Phase 2 implements the full cursor tracking.
+   ============================================================ */
+
+import { useState, useEffect } from 'react'
+
+export interface MousePosition {
+  x: number
+  y: number
+}
+
+export function useMousePosition(): MousePosition {
+  const [position, setPosition] = useState<MousePosition>({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setPosition({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  return position
+}
