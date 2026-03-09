@@ -148,3 +148,11 @@ export const skills: SkillCategory[] = [
     { name: "Direction Artistique", level: 85 }
   ]}
 ]
+
+export const tools = [
+  "Claude", "Ollama", "Groq", "OpenRouter", "n8n", "LangChain",
+  "Three.js", "GSAP", "ComfyUI", "WAN2.2", "Remotion",
+  "React", "Vite", "FastAPI", "Python", "Docker",
+  "TypeScript", "Vercel", "Git", "RunPod", "MT5",
+  "Figma", "Blender", "Framer Motion"
+]

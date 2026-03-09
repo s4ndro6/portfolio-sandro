@@ -17,6 +17,11 @@
   /* Accent */
   --accent: #00FF88;
   --accent-dim: rgba(0, 255, 136, 0.06);
+  --accent-glow: rgba(0, 255, 136, 0.35);
+  --accent-border: rgba(0, 255, 136, 0.15);
+
+  /* Text scale extended */
+  --text-2: #1E3328;
 
   /* Utility */
   --red: #FF2D55;
@@ -65,8 +70,39 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   overflow-x: hidden;
-  /* Hide native cursor — custom cursor replaces it in Phase 2 */
-  /* cursor: none; — uncomment in Phase 2 when CustomCursor is added */
+  cursor: none;
+}
+
+/* ---- Keyframe Animations ---- */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes marquee-ltr {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+/* ---- Utility Classes ---- */
+.dot-pulse { animation: pulse-dot 2s ease-in-out infinite; }
+.cursor-blink { animation: cursor-blink 1s step-end infinite; }
+.mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-1); }
+.glow { text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow); }
+.outline { -webkit-text-stroke: 1px var(--accent); color: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ---- Typography ---- */
