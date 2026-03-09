@@ -1,5 +1,5 @@
 /* ============================================================
-   AAZ Portfolio V4 — Content Data Layer
+   Sandro Portfolio V5 — Content Data Layer
    All portfolio data: projects, timeline, skills
    ============================================================ */
 
@@ -15,7 +15,7 @@ export interface Project {
   tags: string[]
   color: string
   media: string | null
-  mediaType: 'image' | 'canvas-terminal' | 'canvas-chart' | 'canvas-frames' | 'canvas-kanban'
+  mediaType: 'image' | 'canvas-terminal' | 'canvas-chart' | 'canvas-frames'
   size: 'small' | 'medium' | 'large'
 }
 
@@ -43,7 +43,7 @@ export const projects: Project[] = [
     year: "2024", status: "Livré", location: "Lille, France",
     description: "Studio créatif étudiant propulsant PME et créateurs locaux.",
     tags: ["Web Design", "Identité", "React", "Motion"],
-    color: "#00FF88",
+    color: "#C8FF00",
     media: "/images/pulse_digital.png", mediaType: "image",
     size: "large"
   },
@@ -54,7 +54,7 @@ export const projects: Project[] = [
     year: "2024", status: "Livré", location: "Studio, Lille",
     description: "Direction artistique complète pour lancement parfum.",
     tags: ["Photo Direction", "Retouche", "Lightroom", "Branding"],
-    color: "#FF2D55",
+    color: "#FF4D6D",
     media: "/images/avant-apres.png", mediaType: "image",
     size: "small"
   },
@@ -65,7 +65,7 @@ export const projects: Project[] = [
     year: "2024", status: "Livré", location: "Ynov Lille",
     description: "Magazine éditorial Fast & Furious.",
     tags: ["Editorial Design", "InDesign", "Typography", "Art Direction"],
-    color: "#E8FF00",
+    color: "#FFB800",
     media: "/images/magazine.png", mediaType: "image",
     size: "medium"
   },
@@ -76,7 +76,7 @@ export const projects: Project[] = [
     year: "2023–2025", status: "Livré", location: "Hauts-de-France",
     description: "Conception et développement de sites web clients.",
     tags: ["Web Design", "Figma", "HTML/CSS", "SEO"],
-    color: "#00CFFF",
+    color: "#4DFFB4",
     media: "/images/491shots_so.png", mediaType: "image",
     size: "large"
   },
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     year: "2025", status: "En cours", location: "Lille — Local",
     description: "Agent IA local qui contrôle le bureau via FastAPI + Ollama + Groq.",
     tags: ["FastAPI", "Ollama", "Groq", "Python", "Docker"],
-    color: "#00FF88",
+    color: "#C8FF00",
     media: null, mediaType: "canvas-terminal",
     size: "medium"
   },
@@ -98,7 +98,7 @@ export const projects: Project[] = [
     year: "2025", status: "En cours", location: "Remote",
     description: "Bot de trading algorithmique sur MetaTrader 5.",
     tags: ["Python", "MT5", "Pandas", "NumPy", "Algo"],
-    color: "#FF2D55",
+    color: "#FF4D6D",
     media: null, mediaType: "canvas-chart",
     size: "small"
   },
@@ -109,7 +109,7 @@ export const projects: Project[] = [
     year: "2025", status: "En cours", location: "RunPod Cloud",
     description: "Pipeline génération vidéo verticale automatisée.",
     tags: ["ComfyUI", "WAN2.2", "RunPod", "Python", "FFmpeg"],
-    color: "#E8FF00",
+    color: "#FFB800",
     media: null, mediaType: "canvas-frames",
     size: "large"
   }
@@ -117,7 +117,7 @@ export const projects: Project[] = [
 
 export const timeline: TimelineEntry[] = [
   { year: "2025", title: "Follow Park", desc: "CDI essai · 21h/semaine · Gestion parking connecté" },
-  { year: "2024", title: "Micro-entreprise AAZ", desc: "Officialisation · Premiers clients · 7 projets actifs" },
+  { year: "2024", title: "Micro-entreprise", desc: "Alessandro Schillaci · Premiers clients · 7 projets" },
   { year: "2023", title: "Ynov Lille B1", desc: "Chef de Projets Digitaux · Projets réels · Certifications" },
   { year: "2020", title: "Sapeur-Pompier Volontaire", desc: "3 ans de terrain · Rigueur · Travail d'équipe · Engagement" }
 ]

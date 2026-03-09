@@ -1,23 +1,16 @@
-/* ============================================================
-   AAZ Portfolio V4 — Navbar
-   Fixed top, blur on scroll, nav links with image previews
-   ============================================================ */
-
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 
 const NAV_LINKS = [
-  { label: 'PROJETS', to: '/projets', img: '/images/pulse_digital.png' },
-  { label: 'À PROPOS', to: '/a-propos', img: '/images/sandro.jpg' },
-  { label: 'CONTACT', to: '/contact', img: null },
+  { label: 'Projets', to: '/projets', img: '/images/pulse_digital.png' },
+  { label: 'À propos', to: '/a-propos', img: '/images/sandro.jpg' },
+  { label: 'Contact', to: '/contact', img: null },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
-  const navRef = useRef<HTMLElement>(null)
   const prevScrollY = useRef(0)
   const previewRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const location = useLocation()
@@ -25,61 +18,50 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY
-      setScrolled(y >= 80)
-      if (y > prevScrollY.current && y > 200) {
-        setHidden(true)
-      } else {
-        setHidden(false)
-      }
+      setScrolled(y >= 60)
+      setHidden(y > prevScrollY.current && y > 280)
       prevScrollY.current = y
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const handleLinkEnter = (label: string) => {
-    setHoveredLink(label)
+  const handleEnter = (label: string) => {
     const el = previewRefs.current[label]
     if (el) {
       gsap.fromTo(
         el,
-        { clipPath: 'inset(100% 0 0 0)', rotation: -3, opacity: 1 },
-        { clipPath: 'inset(0% 0 0 0)', rotation: 0, duration: 0.35, ease: 'power3.out' }
+        { clipPath: 'inset(100% 0 0 0)', rotation: -4, opacity: 1 },
+        { clipPath: 'inset(0% 0 0 0)', rotation: 0, duration: 0.38, ease: 'power3.out' }
       )
     }
   }
 
-  const handleLinkLeave = (label: string) => {
-    setHoveredLink(null)
+  const handleLeave = (label: string) => {
     const el = previewRefs.current[label]
     if (el) {
-      gsap.to(el, {
-        clipPath: 'inset(100% 0 0 0)',
-        duration: 0.25,
-        ease: 'power3.in',
-      })
+      gsap.to(el, { clipPath: 'inset(100% 0 0 0)', duration: 0.25, ease: 'power3.in' })
     }
   }
 
   return (
     <nav
-      ref={navRef}
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
-        height: 56,
+        height: 52,
         zIndex: 1000,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingInline: '2rem',
-        transition: 'transform 0.25s ease, background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
+        transition: 'transform 0.28s ease, background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
         transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
-        background: scrolled ? 'rgba(2,8,4,0.88)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--accent-border)' : '1px solid transparent',
+        background: scrolled ? 'rgba(12,12,10,0.85)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(24px)' : 'none',
+        borderBottom: scrolled ? '1px solid var(--text-2)' : '1px solid transparent',
       }}
     >
       {/* Logo */}
@@ -87,27 +69,13 @@ export default function Navbar() {
         to="/"
         style={{
           fontFamily: 'var(--font-display)',
-          fontWeight: 800,
-          fontSize: 22,
+          fontWeight: 700,
+          fontSize: 20,
           color: 'var(--text-0)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-          letterSpacing: '-0.02em',
+          letterSpacing: '-0.03em',
         }}
-        data-cursor="link"
       >
-        AAZ
-        <span
-          className="dot-pulse"
-          style={{
-            width: 7,
-            height: 7,
-            borderRadius: '50%',
-            background: 'var(--accent)',
-            display: 'inline-block',
-          }}
-        />
+        Sandro
       </Link>
 
       {/* Nav links */}
@@ -118,49 +86,46 @@ export default function Navbar() {
             <div
               key={label}
               style={{ position: 'relative' }}
-              onMouseEnter={() => handleLinkEnter(label)}
-              onMouseLeave={() => handleLinkLeave(label)}
+              onMouseEnter={() => handleEnter(label)}
+              onMouseLeave={() => handleLeave(label)}
             >
               <Link
                 to={to}
-                data-cursor="link"
                 style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: 11,
-                  letterSpacing: '0.14em',
-                  color: isActive ? 'var(--accent)' : 'var(--text-1)',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 400,
+                  fontSize: 15,
+                  color: isActive ? 'var(--text-0)' : 'var(--text-1)',
                   transition: 'color 0.2s',
                   position: 'relative',
                   paddingBottom: 4,
                 }}
               >
-                [{label}]
-                {/* Underline */}
+                {label}
                 <span
                   style={{
                     position: 'absolute',
                     bottom: 0,
                     left: 0,
                     height: 1,
-                    background: 'var(--accent)',
-                    width: hoveredLink === label || isActive ? '100%' : '0%',
+                    background: 'var(--text-0)',
+                    width: isActive ? '100%' : '0%',
                     transition: 'width 0.3s ease',
                   }}
                 />
               </Link>
 
-              {/* Image preview */}
               {img && (
                 <div
                   ref={el => { previewRefs.current[label] = el }}
                   style={{
                     position: 'absolute',
-                    top: 'calc(100% + 16px)',
+                    top: 'calc(100% + 20px)',
                     left: '50%',
                     transform: 'translateX(-50%)',
                     width: 180,
-                    height: 240,
-                    borderRadius: 6,
+                    height: 230,
+                    borderRadius: 4,
                     overflow: 'hidden',
                     clipPath: 'inset(100% 0 0 0)',
                     pointerEvents: 'none',
@@ -179,25 +144,13 @@ export default function Navbar() {
         })}
       </div>
 
-      {/* Right side */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            fontFamily: 'var(--font-mono)',
-            fontSize: 10,
-            letterSpacing: '0.12em',
-            color: 'var(--text-1)',
-            background: 'rgba(0,255,136,0.06)',
-            border: '1px solid var(--accent-border)',
-            borderRadius: 20,
-            padding: '4px 10px',
-          }}
+      {/* Right */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <span
+          className="label pulse"
+          style={{ color: 'var(--text-1)', display: 'flex', alignItems: 'center', gap: 6 }}
         >
           <span
-            className="dot-pulse"
             style={{
               width: 5,
               height: 5,
@@ -206,25 +159,28 @@ export default function Navbar() {
               display: 'inline-block',
             }}
           />
-          DISPO B2
-        </div>
+          Dispo B2
+        </span>
         <Link
           to="/contact"
-          data-magnetic
-          data-cursor="link"
           style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: 10,
-            letterSpacing: '0.14em',
-            color: 'var(--bg-0)',
-            background: 'var(--accent)',
-            padding: '6px 14px',
+            fontFamily: 'var(--font-body)',
+            fontSize: 14,
+            fontWeight: 400,
+            color: 'var(--text-0)',
+            border: '1px solid var(--text-2)',
+            padding: '5px 14px',
             borderRadius: 2,
-            fontWeight: 500,
-            transition: 'opacity 0.2s',
+            transition: 'border-color 0.2s, color 0.2s',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.borderColor = 'var(--text-0)'
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.borderColor = 'var(--text-2)'
           }}
         >
-          [CONTACT →]
+          Contact →
         </Link>
       </div>
     </nav>

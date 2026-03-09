@@ -1,8 +1,3 @@
-/* ============================================================
-   AAZ Portfolio V4 — MagneticBtn
-   Magnetic hover effect with elastic return
-   ============================================================ */
-
 import { useRef, type ReactNode } from 'react'
 import gsap from 'gsap'
 
@@ -11,10 +6,13 @@ interface MagneticBtnProps {
   style?: React.CSSProperties
   className?: string
   onClick?: () => void
+  as?: 'button' | 'a'
+  href?: string
+  target?: string
 }
 
-export default function MagneticBtn({ children, style, className, onClick }: MagneticBtnProps) {
-  const ref = useRef<HTMLButtonElement>(null)
+export default function MagneticBtn({ children, style, className, onClick, as: Tag = 'button', href, target }: MagneticBtnProps) {
+  const ref = useRef<HTMLButtonElement & HTMLAnchorElement>(null)
 
   const onMouseEnter = () => {
     const el = ref.current
@@ -26,26 +24,35 @@ export default function MagneticBtn({ children, style, className, onClick }: Mag
       gsap.to(el, { x: offsetX * 0.35, y: offsetY * 0.35, duration: 0.4, ease: 'power2.out' })
     }
     el.addEventListener('mousemove', onMouseMove)
-    ;(el as HTMLButtonElement & { _clean?: () => void })._clean = () => el.removeEventListener('mousemove', onMouseMove)
+    ;(el as typeof el & { _clean?: () => void })._clean = () => el.removeEventListener('mousemove', onMouseMove)
   }
 
   const onMouseLeave = () => {
     const el = ref.current
     if (!el) return
-    ;(el as HTMLButtonElement & { _clean?: () => void })._clean?.()
+    ;(el as typeof el & { _clean?: () => void })._clean?.()
     gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.5)' })
   }
 
+  const commonProps = {
+    ref,
+    className,
+    style: { display: 'inline-block', background: 'none', border: 'none', padding: 0, ...style },
+    onMouseEnter,
+    onMouseLeave,
+    'data-cursor': 'link',
+  }
+
+  if (Tag === 'a') {
+    return (
+      <a {...commonProps} href={href} target={target} rel={target === '_blank' ? 'noopener noreferrer' : undefined}>
+        {children}
+      </a>
+    )
+  }
+
   return (
-    <button
-      ref={ref}
-      className={className}
-      style={{ display: 'inline-block', background: 'none', border: 'none', padding: 0, ...style }}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onClick={onClick}
-      data-cursor="link"
-    >
+    <button {...commonProps} onClick={onClick}>
       {children}
     </button>
   )

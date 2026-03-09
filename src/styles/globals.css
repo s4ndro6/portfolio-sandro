@@ -1,50 +1,37 @@
 /* ============================================================
-   AAZ Portfolio V4 — Global Styles
-   Design tokens, resets, font assignments, utilities
+   Sandro Portfolio V5 — Global Styles
+   Dark Élégant × Touches Tech Subtiles
    ============================================================ */
 
-/* ---- Custom Properties ---- */
 :root {
-  /* Background scale */
-  --bg-0: #020804;
-  --bg-1: #040D06;
-  --bg-2: #071209;
+  /* Fonds */
+  --bg-0: #0C0C0A;
+  --bg-1: #131310;
+  --bg-2: #1A1A16;
+  --bg-light: #F5F2EB;
 
-  /* Text scale */
-  --text-0: #E8F4F0;
-  --text-1: #4A6B5A;
+  /* Texte */
+  --text-0: #F0EDE6;
+  --text-1: #6B6860;
+  --text-2: #2E2C28;
 
   /* Accent */
-  --accent: #00FF88;
-  --accent-dim: rgba(0, 255, 136, 0.06);
-  --accent-glow: rgba(0, 255, 136, 0.35);
-  --accent-border: rgba(0, 255, 136, 0.15);
+  --accent: #C8FF00;
+  --accent-warm: #D4A853;
+  --accent-dim: rgba(200, 255, 0, 0.07);
+  --accent-border: rgba(200, 255, 0, 0.15);
 
-  /* Text scale extended */
-  --text-2: #1E3328;
-
-  /* Utility */
-  --red: #FF2D55;
-  --white: #FFFFFF;
-
-  /* Typography */
+  /* Typo */
   --font-display: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Spacing scale */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 2rem;
-  --space-xl: 4rem;
-  --space-2xl: 8rem;
-
-  /* Z-index layers */
+  /* Z-index */
   --z-base: 1;
   --z-overlay: 10;
   --z-nav: 100;
   --z-cursor: 1000;
+  --z-loader: 2000;
 }
 
 /* ---- Reset ---- */
@@ -59,68 +46,63 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  /* Lenis requires scroll-behavior: auto (not smooth) — Lenis handles smoothing */
   scroll-behavior: auto;
 }
 
 body {
-  background-color: var(--bg-0);
+  background: var(--bg-0);
   color: var(--text-0);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-weight: 300;
   line-height: 1.6;
-  overflow-x: hidden;
   cursor: none;
+  overflow-x: hidden;
 }
 
-/* ---- Keyframe Animations ---- */
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-@keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-@keyframes marquee-ltr {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@keyframes marquee-rtl {
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
+/* Grain subtil */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9999;
 }
 
-/* ---- Utility Classes ---- */
-.dot-pulse { animation: pulse-dot 2s ease-in-out infinite; }
-.cursor-blink { animation: cursor-blink 1s step-end infinite; }
-.mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-1); }
-.glow { text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow); }
-.outline { -webkit-text-stroke: 1px var(--accent); color: transparent; }
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 1px; }
+::-webkit-scrollbar-thumb { background: var(--accent); }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/* ---- Selection ---- */
+::selection { background: var(--accent); color: #0C0C0A; }
 
-/* ---- Typography ---- */
+/* ---- Focus ---- */
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+
+/* ---- Typography base ---- */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   color: var(--text-0);
+}
+
+h1 {
+  font-size: clamp(64px, 10vw, 160px);
+  line-height: 0.92;
+}
+
+h2 {
+  font-size: clamp(40px, 6vw, 96px);
+  font-weight: 700;
+  line-height: 0.95;
 }
 
 p {
   font-family: var(--font-body);
   color: var(--text-1);
-}
-
-code, pre, .mono {
-  font-family: var(--font-mono);
 }
 
 a {
@@ -136,62 +118,84 @@ img, video, canvas {
 button {
   border: none;
   background: none;
-  cursor: pointer;
+  cursor: none;
   font-family: inherit;
 }
 
-/* ---- Layout Utilities ---- */
-.container {
-  width: 100%;
-  max-width: 1400px;
-  margin-inline: auto;
-  padding-inline: var(--space-lg);
+/* ---- Keyframes ---- */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+@keyframes marquee-ltr {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
+/* ---- Utility Classes ---- */
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+
+.accent { color: var(--accent); }
+
+.outline {
+  -webkit-text-stroke: 1px var(--text-0);
+  color: transparent;
+}
+
+.outline-accent {
+  -webkit-text-stroke: 1px var(--accent);
+  color: transparent;
+}
+
+.separator {
   height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
+  background: var(--text-2);
+  width: 100%;
 }
 
-/* ---- Accent utilities ---- */
-.accent {
-  color: var(--accent);
-}
+.pulse { animation: pulse 2.5s ease-in-out infinite; }
 
-.accent-bg {
-  background-color: var(--accent);
-  color: var(--bg-0);
-}
-
-/* ---- Noise overlay base (activated in Phase 2) ---- */
-.noise-overlay {
-  position: fixed;
-  inset: 0;
+.section-num {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(100px, 18vw, 240px);
+  color: rgba(240, 237, 230, 0.03);
   pointer-events: none;
-  z-index: var(--z-overlay);
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  user-select: none;
+  line-height: 1;
 }
 
-/* ---- Scrollbar ---- */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-0);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 2px;
+.body-lg {
+  font-size: clamp(17px, 1.6vw, 22px);
+  line-height: 1.8;
+  font-weight: 300;
 }
 
-/* ---- Selection ---- */
-::selection {
-  background-color: var(--accent);
-  color: var(--bg-0);
+/* ---- Mobile ---- */
+@media (max-width: 768px) {
+  .cursor { display: none !important; }
+  body { cursor: auto; }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

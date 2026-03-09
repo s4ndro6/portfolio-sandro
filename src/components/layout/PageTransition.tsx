@@ -1,8 +1,3 @@
-/* ============================================================
-   AAZ Portfolio V4 — PageTransition
-   Framer Motion clip-path diagonal reveal/exit
-   ============================================================ */
-
 import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 
@@ -11,14 +6,14 @@ interface PageTransitionProps {
 }
 
 const variants = {
-  initial: { clipPath: 'inset(100% 0% 0% 100%)' },
+  initial: { clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' },
   animate: {
-    clipPath: 'inset(0% 0% 0% 0%)',
-    transition: { duration: 0.38, ease: [0.76, 0, 0.24, 1] as const },
+    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+    transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1] as const },
   },
   exit: {
-    clipPath: 'inset(0% 0% 100% 0%)',
-    transition: { duration: 0.32, ease: [0.76, 0, 0.24, 1] as const },
+    clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)',
+    transition: { duration: 0.3, ease: [0.76, 0, 0.24, 1] as const },
   },
 }
 
@@ -29,7 +24,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
       initial="initial"
       animate="animate"
       exit="exit"
-      style={{ background: 'var(--bg-0)', minHeight: '100vh' }}
+      style={{ minHeight: '100vh' }}
     >
       {children}
     </motion.div>

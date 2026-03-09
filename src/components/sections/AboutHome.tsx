@@ -137,7 +137,7 @@ export default function AboutHome() {
 
       {/* Right — photo */}
       <div style={{ height: 500, position: 'relative' }}>
-        <TiltPhoto caption="[Lille, 2025]" />
+        <TiltPhoto />
       </div>
     </section>
   )

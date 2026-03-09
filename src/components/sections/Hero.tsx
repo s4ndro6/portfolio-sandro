@@ -1,108 +1,125 @@
-/* ============================================================
-   AAZ Portfolio V4 — Hero Section
-   Full-viewport split: text left, photo right
-   ============================================================ */
-
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
-import TypeWriter from '../ui/TypeWriter'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TiltPhoto from '../ui/TiltPhoto'
+import HeroParticles from '../three/HeroParticles'
 
 interface HeroProps {
   isLoaded: boolean
 }
 
-const PILLS = ['● Motion Design', '● IA Agents', '● Web Dev', '● Direction Art.']
+const PILLS = ['● IA & Automation', '● Motion Design', '● Web Dev']
 
 export default function Hero({ isLoaded }: HeroProps) {
   const labelRef = useRef<HTMLDivElement>(null)
-  const h1Line1Ref = useRef<HTMLHeadingElement>(null)
-  const h1Line2Ref = useRef<HTMLHeadingElement>(null)
+  const h1Ref = useRef<HTMLDivElement>(null)
+  const separatorRef = useRef<HTMLDivElement>(null)
+  const subRef = useRef<HTMLDivElement>(null)
   const pillsRef = useRef<HTMLDivElement>(null)
   const buttonsRef = useRef<HTMLDivElement>(null)
   const photoRef = useRef<HTMLDivElement>(null)
-  const [startTypewriter, setStartTypewriter] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     if (!isLoaded) return
+    const tl = gsap.timeline({ delay: 0.2 })
 
-    const tl = gsap.timeline({ delay: 0.3 })
+    tl.fromTo(labelRef.current, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' })
 
-    tl.fromTo(labelRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' })
-
-    tl.fromTo(
-      h1Line1Ref.current,
-      { clipPath: 'inset(0 0 100% 0)', y: 50 },
-      { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1, ease: 'power4.out' },
-      '-=0.2'
-    )
-    tl.fromTo(
-      h1Line2Ref.current,
-      { clipPath: 'inset(0 0 100% 0)', y: 50 },
-      { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1, ease: 'power4.out' },
-      '-=0.7'
-    )
-
-    tl.add(() => setStartTypewriter(true), '-=0.3')
-
-    if (pillsRef.current) {
-      const pills = pillsRef.current.children
+    if (h1Ref.current) {
+      const lines = h1Ref.current.querySelectorAll('.h1-line')
       tl.fromTo(
-        pills,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
+        lines,
+        { clipPath: 'inset(0 0 100% 0)', y: 50 },
+        { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1, stagger: 0.12, ease: 'power4.out' },
         '-=0.2'
       )
     }
 
-    tl.fromTo(
-      buttonsRef.current,
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.15, ease: 'power2.out' },
-      '-=0.3'
-    )
+    tl.fromTo(separatorRef.current, { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power3.out', transformOrigin: 'left' }, '-=0.3')
+
+    tl.fromTo(subRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.2')
+
+    if (pillsRef.current) {
+      tl.fromTo(
+        pillsRef.current.children,
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
+        '-=0.3'
+      )
+    }
+
+    if (buttonsRef.current) {
+      tl.fromTo(
+        buttonsRef.current.children,
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.15, ease: 'power2.out' },
+        '-=0.3'
+      )
+    }
 
     tl.fromTo(
       photoRef.current,
-      { x: 60, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.2, ease: 'power3.out' },
+      { x: 50, opacity: 0 },
+      { x: 0, opacity: 1, duration: 1.3, ease: 'power3.out' },
       0.4
     )
+
+    // Scroll parallax
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+      onUpdate: (self) => {
+        if (photoRef.current) {
+          gsap.set(photoRef.current, { y: self.progress * 80, opacity: 1 - self.progress * 0.4 })
+        }
+        if (h1Ref.current) {
+          gsap.set(h1Ref.current, { y: self.progress * -40 })
+        }
+        if (scrollRef.current) {
+          gsap.set(scrollRef.current, { opacity: 1 - self.progress * 3 })
+        }
+      },
+    })
   }, [isLoaded])
 
   return (
     <section
+      ref={sectionRef}
       style={{
         position: 'relative',
-        height: '100vh',
+        height: '100svh',
         display: 'grid',
         gridTemplateColumns: '55fr 45fr',
         alignItems: 'center',
+        padding: '0 80px',
         overflow: 'hidden',
-        paddingBottom: 28, // StatusBar height
       }}
     >
+      <HeroParticles />
+
       {/* Left column */}
       <div
         style={{
           position: 'relative',
           zIndex: 1,
-          paddingLeft: '2rem',
-          paddingRight: '3rem',
           display: 'flex',
           flexDirection: 'column',
           gap: '1.5rem',
+          paddingRight: '3rem',
         }}
       >
         {/* Label */}
         <div
           ref={labelRef}
-          className="mono"
+          className="label"
           style={{ opacity: 0, display: 'flex', alignItems: 'center', gap: 8 }}
         >
           <span
-            className="dot-pulse"
             style={{
               width: 6,
               height: 6,
@@ -111,57 +128,67 @@ export default function Hero({ isLoaded }: HeroProps) {
               display: 'inline-block',
             }}
           />
-          SYSTÈME ACTIF — LILLE, FR
+          CRÉATION × AUTOMATISATION × DESIGN
         </div>
 
         {/* H1 */}
-        <div style={{ overflow: 'hidden', lineHeight: 0.9 }}>
-          <h1
-            ref={h1Line1Ref}
+        <div ref={h1Ref}>
+          <div
+            className="h1-line"
             style={{
               fontFamily: 'var(--font-display)',
               fontWeight: 800,
-              fontSize: 'clamp(4rem, 11vw, 11vw)',
+              fontSize: 'clamp(64px, 10vw, 160px)',
               color: 'var(--text-0)',
-              lineHeight: 0.88,
+              lineHeight: 0.92,
               letterSpacing: '-0.03em',
               clipPath: 'inset(0 0 100% 0)',
-              margin: 0,
             }}
           >
-            ALESSANDRO
-          </h1>
-          <h1
-            ref={h1Line2Ref}
-            className="outline"
+            SANDRO
+          </div>
+          <div
+            className="h1-line outline"
             style={{
               fontFamily: 'var(--font-display)',
               fontWeight: 800,
-              fontSize: 'clamp(4rem, 11vw, 11vw)',
-              lineHeight: 0.88,
+              fontSize: 'clamp(64px, 10vw, 160px)',
+              lineHeight: 0.92,
               letterSpacing: '-0.03em',
               clipPath: 'inset(0 0 100% 0)',
-              margin: 0,
             }}
           >
             SCHILLACI
-          </h1>
+          </div>
         </div>
 
-        {/* TypeWriter */}
-        <div style={{ opacity: startTypewriter ? 1 : 0, transition: 'opacity 0.3s' }}>
-          <TypeWriter
-            text="Créateur de systèmes IA_"
-            speed={60}
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontStyle: 'italic',
-              fontSize: 20,
-              color: 'var(--text-0)',
-              letterSpacing: '-0.01em',
-            }}
-          />
-        </div>
+        {/* Separator */}
+        <div
+          ref={separatorRef}
+          style={{
+            width: 60,
+            height: 1,
+            background: 'var(--accent)',
+            transformOrigin: 'left',
+            transform: 'scaleX(0)',
+          }}
+        />
+
+        {/* Subtitle */}
+        <p
+          ref={subRef}
+          style={{
+            fontFamily: 'var(--font-body)',
+            fontWeight: 300,
+            fontSize: 18,
+            color: 'var(--text-0)',
+            opacity: 0,
+            maxWidth: 400,
+            lineHeight: 1.7,
+          }}
+        >
+          Designer créatif & développeur IA basé à Lille.
+        </p>
 
         {/* Pills */}
         <div
@@ -176,8 +203,8 @@ export default function Hero({ isLoaded }: HeroProps) {
                 fontSize: 10,
                 letterSpacing: '0.1em',
                 color: 'var(--text-1)',
-                border: '1px solid var(--accent-border)',
-                padding: '4px 10px',
+                border: '1px solid var(--text-2)',
+                padding: '5px 12px',
                 borderRadius: 2,
               }}
             >
@@ -187,42 +214,42 @@ export default function Hero({ isLoaded }: HeroProps) {
         </div>
 
         {/* Buttons */}
-        <div ref={buttonsRef} style={{ display: 'flex', gap: '1rem', opacity: 0 }}>
+        <div ref={buttonsRef} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <Link
             to="/projets"
-            data-magnetic
-            data-cursor="link"
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: 11,
-              letterSpacing: '0.14em',
+              fontFamily: 'var(--font-body)',
+              fontSize: 14,
+              fontWeight: 400,
               color: 'var(--bg-0)',
               background: 'var(--accent)',
-              padding: '12px 24px',
+              padding: '12px 28px',
               display: 'inline-block',
-              fontWeight: 500,
+              opacity: 0,
               transition: 'opacity 0.2s',
             }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = '0.85' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = '1' }}
           >
             VOIR MES PROJETS →
           </Link>
           <a
-            href="/cv-alessandro-schillaci.pdf"
-            download
-            data-magnetic
-            data-cursor="link"
+            href="#about"
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: 11,
-              letterSpacing: '0.14em',
-              color: 'var(--accent)',
-              border: '1px solid var(--accent-border)',
-              padding: '12px 24px',
+              fontFamily: 'var(--font-body)',
+              fontSize: 14,
+              fontWeight: 400,
+              color: 'var(--text-0)',
+              border: '1px solid var(--text-2)',
+              padding: '12px 28px',
               display: 'inline-block',
-              transition: 'background 0.2s',
+              opacity: 0,
+              transition: 'border-color 0.2s',
             }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--text-0)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--text-2)' }}
           >
-            DOWNLOAD CV ↓
+            ALTERNANCE B2 ↓
           </a>
         </div>
       </div>
@@ -233,12 +260,31 @@ export default function Hero({ isLoaded }: HeroProps) {
         style={{
           height: '80vh',
           opacity: 0,
-          padding: '2rem 2rem 2rem 0',
           position: 'relative',
           zIndex: 1,
         }}
       >
         <TiltPhoto />
+      </div>
+
+      {/* Scroll indicator */}
+      <div
+        ref={scrollRef}
+        style={{
+          position: 'absolute',
+          bottom: 40,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 8,
+          zIndex: 1,
+        }}
+      >
+        <span className="label" style={{ writingMode: 'vertical-rl', letterSpacing: '0.18em' }}>SCROLL</span>
+        <div style={{ width: 1, height: 40, background: 'var(--text-2)' }} />
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-1)' }}>↓</span>
       </div>
     </section>
   )

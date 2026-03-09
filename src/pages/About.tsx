@@ -1,114 +1,266 @@
-/* ============================================================
-   AAZ Portfolio V4 — About Page
-   ============================================================ */
-
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
 import PageTransition from '../components/layout/PageTransition'
 import TiltPhoto from '../components/ui/TiltPhoto'
-import TypeWriter from '../components/ui/TypeWriter'
-import SkillsTerminal from '../components/sections/SkillsTerminal'
-import { TextScramble } from '../utils/textScramble'
-import { timeline } from '../data/content'
-
-gsap.registerPlugin(ScrollTrigger)
+import Footer from '../components/layout/Footer'
+import { skills, timeline } from '../data/content'
 
 export default function About() {
-  const h1Ref = useRef<HTMLHeadingElement>(null)
-  const h2Ref = useRef<HTMLHeadingElement>(null)
-  const timelineLineRef = useRef<SVGLineElement>(null)
   const timelineRef = useRef<HTMLDivElement>(null)
+  const skillsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (h1Ref.current) new TextScramble(h1Ref.current).setText('À PROPOS')
-    if (h2Ref.current) setTimeout(() => new TextScramble(h2Ref.current!).setText('DU SYSTÈME'), 200)
-  }, [])
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const items = timelineRef.current?.querySelectorAll('[data-timeline-item]')
-      items?.forEach((item, i) => {
-        gsap.fromTo(item, { x: i % 2 === 0 ? -40 : 40, opacity: 0 }, {
+    // Timeline animations
+    const items = timelineRef.current?.querySelectorAll('[data-timeline-item]')
+    items?.forEach((item, i) => {
+      gsap.fromTo(
+        item,
+        { x: i % 2 === 0 ? -40 : 40, opacity: 0 },
+        {
           x: 0, opacity: 1, duration: 0.7, ease: 'power2.out',
-          scrollTrigger: { trigger: item, start: 'top 80%', once: true },
-        })
-      })
-      const line = timelineLineRef.current
-      if (line) {
-        gsap.set(line, { strokeDasharray: 600, strokeDashoffset: 600 })
-        gsap.to(line, {
-          strokeDashoffset: 0, duration: 2, ease: 'none',
-          scrollTrigger: { trigger: timelineRef.current, start: 'top 80%', end: 'bottom 20%', scrub: 1 },
-        })
-      }
+          scrollTrigger: { trigger: item, start: 'top 82%', once: true },
+        }
+      )
     })
-    return () => ctx.revert()
+
+    // Skills bars
+    const bars = skillsRef.current?.querySelectorAll('[data-skill-bar]')
+    bars?.forEach(bar => {
+      const level = (bar as HTMLElement).dataset.level ?? '0'
+      gsap.fromTo(
+        bar,
+        { width: 0 },
+        {
+          width: `${level}%`,
+          duration: 1.2,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: bar, start: 'top 85%', once: true },
+        }
+      )
+    })
   }, [])
 
   return (
     <PageTransition>
-      <main style={{ paddingTop: 56, paddingBottom: 28 }}>
-        <div style={{ padding: '4rem 2rem 2rem' }}>
-          <div className="mono" style={{ marginBottom: '1rem', color: 'var(--accent)' }}>// SYSTÈME / OPÉRATEUR</div>
-          <h1 ref={h1Ref} style={{
-            fontFamily: 'var(--font-display)', fontWeight: 800,
-            fontSize: 'clamp(3rem, 11vw, 11vw)', color: 'var(--text-0)',
-            lineHeight: 0.88, letterSpacing: '-0.03em',
-          }}>À PROPOS</h1>
-          <h2 ref={h2Ref} className="outline" style={{
-            fontFamily: 'var(--font-display)', fontWeight: 800,
-            fontSize: 'clamp(3rem, 11vw, 11vw)', lineHeight: 0.88,
-            letterSpacing: '-0.03em', marginBottom: '3rem',
-          }}>DU SYSTÈME</h2>
+      <main style={{ paddingTop: 52 }}>
+        {/* Header */}
+        <div style={{ padding: '5rem 80px 3rem' }}>
+          <div className="label" style={{ marginBottom: '1.5rem' }}>PARCOURS & COMPÉTENCES</div>
+          <h1
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 800,
+              fontSize: 'clamp(64px, 10vw, 10vw)',
+              lineHeight: 0.92,
+              letterSpacing: '-0.03em',
+              color: 'var(--text-0)',
+            }}
+          >
+            À PROPOS
+          </h1>
+          <h1
+            className="outline"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 800,
+              fontSize: 'clamp(64px, 10vw, 10vw)',
+              lineHeight: 0.92,
+              letterSpacing: '-0.03em',
+              marginBottom: '4rem',
+            }}
+          >
+            DE SANDRO
+          </h1>
         </div>
 
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1fr 380px', gap: '4rem',
-          padding: '0 2rem 5rem', maxWidth: 1400, margin: '0 auto', alignItems: 'start',
-        }}>
-          <div>
-            <div style={{ marginBottom: '2rem' }}>
-              <TypeWriter
-                text="Micro-entrepreneur à 20 ans. Je construis des agents IA, des pipelines automatisés et des expériences digitales qui marquent."
-                speed={30}
-                style={{ fontFamily: 'var(--font-body)', fontSize: 20, lineHeight: 1.8, color: 'var(--text-0)', display: 'block' }}
-              />
-            </div>
-            <p style={{ fontFamily: 'var(--font-body)', fontSize: 17, lineHeight: 1.8, color: 'var(--text-1)', marginBottom: '3rem' }}>
-              Étudiant Chef de Projets Digitaux à Ynov Lille (B1→B2), ancien sapeur-pompier volontaire pendant 3 ans.
-              La rigueur du terrain, l'énergie du digital. Disponible alternance B2 dès septembre 2025.
+        {/* Bio section */}
+        <div
+          style={{
+            padding: '6rem 80px',
+            background: 'var(--bg-1)',
+            textAlign: 'center',
+          }}
+        >
+          <blockquote
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 700,
+              fontSize: 'clamp(24px, 3.5vw, 56px)',
+              lineHeight: 1.2,
+              letterSpacing: '-0.02em',
+              fontStyle: 'italic',
+              color: 'var(--text-0)',
+              maxWidth: 900,
+              margin: '0 auto',
+            }}
+          >
+            "Je ne fais pas des slides sur l'IA.<br />Je construis des systèmes qui fonctionnent."
+          </blockquote>
+        </div>
+
+        {/* Bio + photo */}
+        <div
+          style={{
+            padding: '6rem 80px',
+            display: 'grid',
+            gridTemplateColumns: '400px 1fr',
+            gap: '6rem',
+            alignItems: 'start',
+          }}
+        >
+          <div style={{ position: 'sticky', top: 80, height: 520 }}>
+            <TiltPhoto />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <p className="body-lg" style={{ color: 'var(--text-0)' }}>
+              Micro-entrepreneur à 20 ans, je construis des systèmes IA qui automatisent, génèrent et optimisent. Pas des slides — des agents qui tournent.
             </p>
-            <SkillsTerminal />
-          </div>
-          <div style={{ position: 'sticky', top: 80, height: 500 }}>
-            <TiltPhoto caption="[Lille, 2025]" />
+            <p className="body-lg">
+              Étudiant Chef de Projets Digitaux à Ynov Lille (B1→B2), ancien sapeur-pompier volontaire pendant 3 ans. La rigueur du terrain, l'énergie du digital.
+            </p>
+            <p className="body-lg">
+              Disponible pour une alternance B2 dès septembre 2025. Basé à Lille, mobile partout.
+            </p>
           </div>
         </div>
 
-        <div style={{ padding: '0 2rem 5rem', maxWidth: 800, margin: '0 auto' }}>
-          <div className="mono" style={{ marginBottom: '2rem', color: 'var(--accent)' }}>// PARCOURS</div>
-          <div ref={timelineRef} style={{ position: 'relative' }}>
-            <svg style={{ position: 'absolute', left: 60, top: 0, height: '100%', width: 2, overflow: 'visible' }} width="2" height="600">
-              <line ref={timelineLineRef} x1="1" y1="0" x2="1" y2="600"
-                stroke="var(--accent)" strokeWidth="1" strokeDasharray="600" strokeDashoffset="600" />
-            </svg>
+        {/* Skills */}
+        <div
+          ref={skillsRef}
+          style={{
+            padding: '6rem 80px',
+            background: 'var(--bg-1)',
+          }}
+        >
+          <div className="label" style={{ marginBottom: '3rem' }}>Compétences</div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '3rem',
+            }}
+          >
+            {skills.map(cat => (
+              <div
+                key={cat.category}
+                style={{
+                  background: 'var(--bg-2)',
+                  padding: '2rem',
+                  borderRadius: 4,
+                }}
+              >
+                <div className="label" style={{ marginBottom: '1.5rem', color: 'var(--text-0)' }}>
+                  {cat.category}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  {cat.items.map(item => (
+                    <div key={item.name}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          marginBottom: 8,
+                        }}
+                      >
+                        <span style={{ fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--text-0)' }}>
+                          {item.name}
+                        </span>
+                        <span className="label">{item.level}%</span>
+                      </div>
+                      <div
+                        style={{
+                          height: 2,
+                          background: 'rgba(240,237,230,0.08)',
+                          borderRadius: 1,
+                          overflow: 'hidden',
+                        }}
+                      >
+                        <div
+                          data-skill-bar
+                          data-level={item.level}
+                          style={{
+                            height: '100%',
+                            background: 'var(--accent)',
+                            width: 0,
+                            borderRadius: 1,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Timeline */}
+        <div style={{ padding: '6rem 80px' }}>
+          <div className="label" style={{ marginBottom: '3rem' }}>Parcours</div>
+          <div
+            ref={timelineRef}
+            style={{
+              position: 'relative',
+              maxWidth: 800,
+            }}
+          >
+            {/* Center line */}
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: 1,
+                background: 'var(--text-2)',
+              }}
+            />
+
             {timeline.map((item, i) => (
-              <div key={item.year} data-timeline-item style={{
-                display: 'grid', gridTemplateColumns: '80px 1fr', gap: '2rem',
-                marginBottom: '2.5rem', opacity: 0,
-              }}>
+              <div
+                key={item.year}
+                data-timeline-item
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '100px 1fr',
+                  gap: '3rem',
+                  marginBottom: '3rem',
+                  paddingLeft: '2rem',
+                  opacity: 0,
+                }}
+              >
+                {/* Year */}
                 <div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', color: 'var(--accent)', marginBottom: 4 }}>
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontWeight: 700,
+                      fontSize: 48,
+                      lineHeight: 1,
+                      letterSpacing: '-0.03em',
+                      color: 'var(--accent)',
+                    }}
+                  >
                     {item.year}
                   </div>
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)', marginLeft: 56, marginTop: 4 }} />
                 </div>
-                <div style={{ marginLeft: i % 2 === 0 ? 0 : 20 }}>
-                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 20, color: 'var(--text-0)', marginBottom: 4 }}>
+
+                {/* Content */}
+                <div style={{ paddingTop: 8, textAlign: i % 2 === 0 ? 'left' : 'left' }}>
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontWeight: 700,
+                      fontSize: 22,
+                      color: 'var(--text-0)',
+                      letterSpacing: '-0.02em',
+                      marginBottom: 6,
+                    }}
+                  >
                     {item.title}
                   </div>
-                  <div style={{ fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--text-1)', lineHeight: 1.6 }}>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: 15, color: 'var(--text-1)', lineHeight: 1.7 }}>
                     {item.desc}
                   </div>
                 </div>
@@ -116,6 +268,8 @@ export default function About() {
             ))}
           </div>
         </div>
+
+        <Footer />
       </main>
     </PageTransition>
   )
