@@ -262,6 +262,7 @@ export default function Hero({ isLoaded }: HeroProps) {
           opacity: 0,
           position: 'relative',
           zIndex: 1,
+          overflow: 'hidden',
         }}
       >
         <TiltPhoto />

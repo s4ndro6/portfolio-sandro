@@ -1,46 +1,55 @@
 import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { projects } from '../../data/content'
 
-export default function ProjectsStrip() {
-  const containerRef = useRef<HTMLDivElement>(null)
+interface ProjectsStripProps {
+  isLoaded?: boolean
+}
+
+export default function ProjectsStrip({ isLoaded }: ProjectsStripProps) {
+  const sectionRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const container = containerRef.current
+    if (!isLoaded) return
+    const section = sectionRef.current
     const track = trackRef.current
-    if (!container || !track) return
+    if (!section || !track) return
 
-    const trackWidth = track.scrollWidth - window.innerWidth
+    const ctx = gsap.context(() => {
+      gsap.to(track, {
+        x: () => -(track.scrollWidth - window.innerWidth),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${track.scrollWidth - window.innerWidth}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+    }, section)
 
-    ScrollTrigger.create({
-      trigger: container,
-      start: 'top top',
-      end: () => `+=${trackWidth}`,
-      pin: true,
-      scrub: 1,
-      anticipatePin: 1,
-      onUpdate: self => {
-        gsap.set(track, { x: -self.progress * trackWidth })
-      },
-    })
-  }, [])
+    return () => ctx.revert()
+  }, [isLoaded])
 
   const preview = projects.slice(0, 4)
 
   return (
     <div
-      ref={containerRef}
-      style={{ height: '100vh', overflow: 'hidden', position: 'relative' }}
+      ref={sectionRef}
+      style={{ position: 'relative', overflow: 'hidden' }}
     >
+      {/* Header row */}
       <div
         style={{
           position: 'absolute',
           top: 40,
           left: 80,
-          zIndex: 1,
+          zIndex: 2,
           display: 'flex',
           justifyContent: 'space-between',
           width: 'calc(100% - 160px)',
@@ -65,15 +74,17 @@ export default function ProjectsStrip() {
         </Link>
       </div>
 
+      {/* Track */}
       <div
         ref={trackRef}
         style={{
           display: 'flex',
-          height: '100%',
+          height: '100vh',
           paddingTop: 80,
           paddingBottom: 20,
           gap: '2px',
           width: 'max-content',
+          willChange: 'transform',
         }}
       >
         {preview.map((project) => (
@@ -91,7 +102,6 @@ export default function ProjectsStrip() {
               display: 'block',
             }}
           >
-            {/* Number */}
             <span
               style={{
                 position: 'absolute',
@@ -110,21 +120,14 @@ export default function ProjectsStrip() {
               {project.id}
             </span>
 
-            {/* Image */}
             {project.media && (
               <img
                 src={project.media}
                 alt={project.title}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
               />
             )}
 
-            {/* Bottom overlay */}
             <div
               style={{
                 position: 'absolute',
@@ -145,7 +148,7 @@ export default function ProjectsStrip() {
                   fontWeight: 700,
                   fontSize: 32,
                   color: 'var(--text-0)',
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '-0.03em',
                   lineHeight: 1,
                   whiteSpace: 'pre-line',
                 }}
@@ -196,20 +199,13 @@ export default function ProjectsStrip() {
               fontWeight: 700,
               fontSize: 28,
               color: 'var(--text-0)',
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.03em',
               textAlign: 'center',
             }}
           >
             Voir tous les projets
           </span>
-          <span
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 700,
-              fontSize: 48,
-              color: 'var(--accent)',
-            }}
-          >
+          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 48, color: 'var(--accent)' }}>
             →
           </span>
         </Link>

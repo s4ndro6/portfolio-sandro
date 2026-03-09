@@ -22,16 +22,17 @@
   --accent-border: rgba(200, 255, 0, 0.15);
 
   /* Typo */
-  --font-display: 'Syne', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Z-index */
-  --z-base: 1;
-  --z-overlay: 10;
+  /* Z-index — hiérarchie stricte */
+  --z-bg: 0;
+  --z-content: 1;
   --z-nav: 100;
-  --z-cursor: 1000;
-  --z-loader: 2000;
+  --z-transition: 500;
+  --z-cursor: 9999;
+  --z-loader: 10000;
 }
 
 /* ---- Reset ---- */
@@ -67,7 +68,7 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity: 0.025;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9998;
 }
 
 /* ---- Scrollbar ---- */
@@ -80,24 +81,58 @@ body::before {
 /* ---- Focus ---- */
 :focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
 
-/* ---- Typography base ---- */
+/* ---- Stacking contexts ---- */
+
+/* Three.js canvas stays in background */
+.hero-canvas-wrapper {
+  position: absolute !important;
+  inset: 0;
+  z-index: var(--z-bg);
+  pointer-events: none;
+}
+.hero-canvas-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Page content above canvas */
+main, .page-content { position: relative; z-index: var(--z-content); }
+
+/* Navbar */
+nav { z-index: var(--z-nav); }
+
+/* Cursor */
+.cursor {
+  z-index: var(--z-cursor);
+  pointer-events: none;
+}
+
+/* Loader */
+.loader-wrapper { z-index: var(--z-loader); }
+
+/* ---- Typography ---- */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
   color: var(--text-0);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 h1 {
-  font-size: clamp(64px, 10vw, 160px);
-  line-height: 0.92;
+  font-size: clamp(52px, 8.5vw, 130px);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
 }
 
 h2 {
-  font-size: clamp(40px, 6vw, 96px);
-  font-weight: 700;
-  line-height: 0.95;
+  font-size: clamp(36px, 5vw, 80px);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
 }
 
 p {
@@ -110,9 +145,14 @@ a {
   text-decoration: none;
 }
 
-img, video, canvas {
+img, video {
   display: block;
   max-width: 100%;
+}
+
+/* Canvas reset — ne pas forcer max-width sur les canvas Three.js */
+canvas {
+  display: block;
 }
 
 button {
@@ -186,10 +226,30 @@ button {
   font-weight: 300;
 }
 
+/* Hero name specific — very large, no break */
+.hero-name {
+  font-size: clamp(60px, 9vw, 140px);
+  font-weight: 700;
+  line-height: 0.87;
+  letter-spacing: -0.04em;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+/* Section content wrapper — responsive padding */
+.section-pad {
+  padding-inline: clamp(24px, 5vw, 80px);
+  max-width: 100%;
+  overflow: hidden;
+}
+
 /* ---- Mobile ---- */
 @media (max-width: 768px) {
   .cursor { display: none !important; }
   body { cursor: auto; }
+
+  h1 { font-size: clamp(40px, 10vw, 80px); }
+  h2 { font-size: clamp(28px, 7vw, 56px); }
 }
 
 /* ---- Reduced motion ---- */

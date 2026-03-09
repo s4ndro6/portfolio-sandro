@@ -48,13 +48,8 @@ export default function HeroParticles() {
 
   return (
     <div
-      style={{
-        position: 'absolute',
-        inset: 0,
-        zIndex: 0,
-        pointerEvents: 'none',
-        opacity: 0.6,
-      }}
+      className="hero-canvas-wrapper"
+      style={{ opacity: 0.6 }}
     >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60 }}
