@@ -8,12 +8,13 @@
   --bg-0: #0C0C0A;
   --bg-1: #131310;
   --bg-2: #1A1A16;
-  --bg-light: #F5F2EB;
+  --bg-light: #0C0C0A;
 
   /* Texte */
   --text-0: #F0EDE6;
   --text-1: #6B6860;
   --text-2: #2E2C28;
+  --text-dark: #0C0C0A;
 
   /* Accent */
   --accent: #C8FF00;
@@ -22,7 +23,8 @@
   --accent-border: rgba(200, 255, 0, 0.15);
 
   /* Typo */
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-serif: 'Playfair Display', serif;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -83,7 +85,7 @@ body::before {
 
 /* ---- Stacking contexts ---- */
 
-/* Three.js canvas stays in background */
+/* Canvas backgrounds stay behind content */
 .hero-canvas-wrapper {
   position: absolute !important;
   inset: 0;
@@ -95,16 +97,44 @@ body::before {
   height: 100% !important;
 }
 
+/* Interactive background canvas */
+.interactive-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* Page content above canvas */
 main, .page-content { position: relative; z-index: var(--z-content); }
+section { position: relative; z-index: 1; }
+
+/* Hero — grille 2 colonnes, contenu aligné en bas */
+.hero-section {
+  min-height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  padding: clamp(80px, 10vh, 120px) clamp(24px, 4vw, 60px) 0;
+  position: relative;
+}
+
+/* Sections hors hero : pas de height forcé */
+section:not(.hero-section) {
+  height: auto !important;
+  min-height: 0;
+}
 
 /* Navbar */
 nav { z-index: var(--z-nav); }
 
 /* Cursor */
 .cursor {
-  z-index: var(--z-cursor);
+  position: fixed;
   pointer-events: none;
+  z-index: var(--z-cursor);
 }
 
 /* Loader */
@@ -120,6 +150,14 @@ h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
   word-break: break-word;
   max-width: 100%;
+}
+
+/* Playfair italic mix dans les titres */
+h1 em, h2 em {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 h1 {
@@ -201,6 +239,17 @@ button {
   color: transparent;
 }
 
+.hero-line {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  font-size: clamp(52px, 10vw, 160px);
+  overflow: hidden;
+}
+
 .separator {
   height: 1px;
   background: var(--text-2);
@@ -243,13 +292,49 @@ button {
   overflow: hidden;
 }
 
+/* ---- Project cards — confinement strict des images ---- */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.project-card > img,
+.project-card > .card-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Sections : jamais de height fixe sauf .hero */
+section:not(.hero) { height: auto !important; min-height: auto !important; }
+.hero { height: 100svh; position: relative; overflow: hidden; }
+
 /* ---- Mobile ---- */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .cursor { display: none !important; }
   body { cursor: auto; }
 
   h1 { font-size: clamp(40px, 10vw, 80px); }
   h2 { font-size: clamp(28px, 7vw, 56px); }
+}
+
+@media (max-width: 900px) {
+  /* Hero single col, photo below */
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Single col grids */
+  .about-grid,
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* Canvas off on mobile — handled in component */
 }
 
 /* ---- Reduced motion ---- */

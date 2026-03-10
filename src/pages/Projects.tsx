@@ -11,15 +11,23 @@ type FilterType = 'Tout' | 'Web' | 'IA' | 'Motion' | 'Editorial'
 const FILTER_TAGS: Record<FilterType, string[]> = {
   Tout: [],
   Web: ['Web Design', 'HTML/CSS', 'React', 'SEO', 'Figma'],
-  IA: ['FastAPI', 'Ollama', 'Groq', 'Python', 'ComfyUI', 'WAN2.2', 'Docker'],
-  Motion: ['Motion', 'GSAP', 'Three.js'],
-  Editorial: ['Editorial', 'InDesign', 'Typography', 'Photo Direction', 'Art Direction', 'Branding'],
+  IA: ['FastAPI', 'Ollama', 'Groq', 'Python', 'ComfyUI', 'WAN2.2', 'Docker', 'RTX 4070', 'MT5', 'Pandas', 'NumPy'],
+  Motion: ['Motion', 'GSAP', 'Three.js', 'Identité'],
+  Editorial: ['Editorial', 'InDesign', 'Typography', 'Photo Direction', 'Art Direction', 'Branding', 'Retouche', 'Lightroom'],
 }
 
-const HEIGHT_MAP: Record<string, string> = {
-  large: '56vh',
-  medium: '48vh',
-  small: '40vh',
+// Fixed grid config: col = CSS gridColumn, height in px, row for grouping
+const GRID_CONFIG: Record<string, { col: string; row: string; height: string }> = {
+  "01": { col: "1 / 8",  row: "1", height: "520px" }, // Pulse Digital
+  "02": { col: "8 / 13", row: "1", height: "520px" }, // Direction Art
+  "03": { col: "1 / 5",  row: "2", height: "460px" }, // Magazine
+  "04": { col: "5 / 9",  row: "2", height: "460px" }, // Site RH
+  "05": { col: "9 / 13", row: "2", height: "460px" }, // Site Asso
+  "06": { col: "1 / 4",  row: "3", height: "480px" }, // Site Portfolio
+  "07": { col: "4 / 10", row: "3", height: "480px" }, // Vision 2
+  "08": { col: "10 / 13",row: "3", height: "480px" }, // Atlas Trading
+  "06-b": { col: "1 / 7",  row: "4", height: "460px" }, // Site Client 4
+  "06-c": { col: "7 / 13", row: "4", height: "460px" }, // Site Client 5
 }
 
 function filterProjects(type: FilterType): Project[] {
@@ -46,7 +54,7 @@ export default function Projects() {
               gsap.fromTo(
                 Array.from(gridRef.current.children),
                 { opacity: 0, scale: 0.97 },
-                { opacity: 1, scale: 1, duration: 0.4, stagger: 0.06, ease: 'power2.out' }
+                { opacity: 1, scale: 1, duration: 0.4, stagger: 0.07, ease: 'power2.out' }
               )
             }
           })
@@ -71,44 +79,35 @@ export default function Projects() {
     <PageTransition>
       <main style={{ paddingTop: 52 }}>
         {/* Header */}
-        <div style={{ padding: '5rem 80px 3rem' }}>
+        <div style={{ padding: '5rem clamp(24px, 5vw, 80px) 3rem' }}>
           <div className="label" style={{ marginBottom: '1rem' }}>
             TRAVAUX & RÉALISATIONS · 2023—2025
           </div>
-          <div style={{ overflow: 'hidden', marginBottom: '2.5rem' }}>
-            <h1
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 800,
-                fontSize: 'clamp(64px, 11vw, 11vw)',
-                lineHeight: 0.92,
-                letterSpacing: '-0.03em',
-                color: 'var(--text-0)',
-              }}
-            >
-              MES
-            </h1>
-          </div>
-          <div style={{ overflow: 'hidden' }}>
-            <h1
-              className="outline"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 800,
-                fontSize: 'clamp(64px, 11vw, 11vw)',
-                lineHeight: 0.92,
-                letterSpacing: '-0.03em',
-              }}
-            >
-              PROJETS
-            </h1>
-          </div>
+          <h1
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 800,
+              fontSize: 'clamp(52px, 9vw, 130px)',
+              lineHeight: 0.9,
+              letterSpacing: '-0.04em',
+              color: 'var(--text-0)',
+              marginBottom: '0.5rem',
+            }}
+          >
+            <em style={{
+              fontFamily: 'Playfair Display, serif',
+              fontStyle: 'italic',
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+            }}>Mes</em>{' '}
+            <span className="outline-accent">Projets</span>
+          </h1>
         </div>
 
         {/* Filters */}
         <div
           style={{
-            paddingInline: 80,
+            paddingInline: 'clamp(24px, 5vw, 80px)',
             paddingBottom: '2rem',
             display: 'flex',
             gap: '0.5rem',
@@ -137,7 +136,7 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Grid */}
+        {/* Grid — fixed 12-col layout */}
         <div
           ref={gridRef}
           style={{
@@ -147,17 +146,17 @@ export default function Projects() {
             paddingInline: 2,
           }}
         >
-          {filtered.map((project, i) => {
-            const span = project.size === 'large' ? 7 : project.size === 'medium' ? 5 : 5
-            const alt = i % 2 === 0
+          {filtered.map(project => {
+            const cfg = GRID_CONFIG[project.id]
             return (
               <div
                 key={project.id}
                 style={{
-                  gridColumn: `span ${alt && project.size !== 'small' ? 12 - span : span}`,
+                  gridColumn: cfg?.col ?? 'span 6',
+                  gridRow: cfg?.row,
                 }}
               >
-                <ProjectCard project={project} height={HEIGHT_MAP[project.size]} />
+                <ProjectCard project={project} height={cfg?.height ?? '480px'} />
               </div>
             )
           })}

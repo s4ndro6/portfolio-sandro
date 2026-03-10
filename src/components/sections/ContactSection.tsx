@@ -1,5 +1,5 @@
 /* ============================================================
-   AAZ Portfolio V4 — ContactSection
+   Sandro Portfolio — ContactSection
    Terminal form with typewriter intro
    ============================================================ */
 
@@ -35,11 +35,11 @@ export default function ContactSection() {
   }
 
   const copyEmail = () => {
-    navigator.clipboard.writeText('hello@aaz.studio')
+    navigator.clipboard.writeText('alessandroschillaci05@yahoo.com')
     const el = emailRef.current
     if (el) {
       el.textContent = '✓ COPIÉ'
-      setTimeout(() => { el.textContent = 'hello@aaz.studio' }, 1500)
+      setTimeout(() => { el.textContent = 'alessandroschillaci05@yahoo.com' }, 1500)
     }
   }
 
@@ -68,7 +68,7 @@ export default function ContactSection() {
             justifyContent: 'space-between',
           }}
         >
-          <span>AAZ_CONTACT_TERMINAL v1.0</span>
+          <span>SANDRO_CONTACT_TERMINAL v1.0</span>
           <span style={{ display: 'flex', gap: 6 }}>
             {['#FF5F57', '#FEBC2E', '#28C840'].map(c => (
               <span
@@ -205,13 +205,12 @@ export default function ContactSection() {
             (e.currentTarget as HTMLDivElement).style.color = 'var(--text-1)'
           }}
         >
-          hello@aaz.studio
+          alessandroschillaci05@yahoo.com
         </div>
 
         {[
-          { label: 'LinkedIn', href: 'https://linkedin.com/in/alessandro-schillaci' },
-          { label: 'GitHub', href: 'https://github.com/aazstudio' },
-          { label: 'TikTok', href: 'https://tiktok.com/@aaz.studio' },
+          { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sandrosch' },
+          { label: 'Instagram', href: 'https://instagram.com/sndro.sch' },
         ].map(link => (
           <a
             key={link.label}
@@ -279,8 +278,8 @@ export default function ContactSection() {
           </div>
         </div>
         <a
-          href="/cv-alessandro-schillaci.pdf"
-          download
+          href="/cv.pdf"
+          download="CV_Alessandro_Schillaci.pdf"
           data-cursor="link"
           style={{
             fontFamily: 'var(--font-mono)',

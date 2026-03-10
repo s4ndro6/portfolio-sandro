@@ -29,6 +29,7 @@ export default function Navbar() {
   const handleEnter = (label: string) => {
     const el = previewRefs.current[label]
     if (el) {
+      gsap.killTweensOf(el)
       gsap.fromTo(
         el,
         { clipPath: 'inset(100% 0 0 0)', rotation: -4, opacity: 1 },
@@ -40,6 +41,7 @@ export default function Navbar() {
   const handleLeave = (label: string) => {
     const el = previewRefs.current[label]
     if (el) {
+      gsap.killTweensOf(el)
       gsap.to(el, { clipPath: 'inset(100% 0 0 0)', duration: 0.25, ease: 'power3.in' })
     }
   }

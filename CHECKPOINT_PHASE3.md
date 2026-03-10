@@ -1,25 +1,19 @@
-# CHECKPOINT AAZ V4 — Phase 3 Complete
-Date: 2026-03-09
+# CHECKPOINT PHASE 3 ✅ — POLISH VISUEL
 
-## ✅ FAIT
-- `HeroShader.tsx` : React Three Fiber Canvas plein écran, ShaderMaterial custom
-  - Fragment shader : scanlines + bruit + ripple souris + vignette + glow bas
-  - uTime via useFrame, uMouse lerp via mousemove
-- `TiltPhoto.tsx` : perspective 1000px, GSAP rotateY/X 15/-8deg, elastic.out retour
-  - Glitch RGB au mount (3 frames 40ms, hue-rotate)
-  - Badge RTX 4070 · ONLINE flottant + caption
-- `TypeWriter.tsx` : character-by-character setInterval, curseur | clignotant
-- `TextScramble.tsx` : composant React wrappant TextScramble utility
-- `Hero.tsx` : grid 55/45, GSAP timeline onLoaded (label→h1→typewriter→pills→buttons→photo)
-  - h1 ALESSANDRO + h1 SCHILLACI .outline
-  - Pills stagger, boutons magnétiques
+## FloatingImages
+- Déjà supprimé (session précédente) ✅
 
-## 📁 FICHIERS CLÉS
-- src/components/three/HeroShader.tsx
-- src/components/ui/TiltPhoto.tsx
-- src/components/ui/TypeWriter.tsx
-- src/components/sections/Hero.tsx
+## ProjectCard hover fix
+- onLeave : clipPath 'inset(0% 0 100% 0)' → overlay sort par le bas (power2.in 0.32s)
+- killTweensOf() présent sur enter ET leave ✅
 
-## 💬 PROMPT DE REPRISE
-> Reprends le portfolio AAZ V4 depuis le checkpoint Phase 3.
-> Lis CHECKPOINT_PHASE3.md et continue à partir de la Phase 4.
+## Projects.tsx
+- Grille 12 colonnes asymétrique déjà en place ✅ (rangées 7/5 · 5/7 · 7/5)
+
+## ProjectsStrip.tsx
+- ScrollTrigger importé
+- setTimeout 200ms avant création du ScrollTrigger
+- dist calculé et vérifié (dist <= 0 → return)
+- scrub: 1.2 (était 1)
+- ScrollTrigger.refresh() après création
+- cleanup : clearTimeout + ctx.revert()

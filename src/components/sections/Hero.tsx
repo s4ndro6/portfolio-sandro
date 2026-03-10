@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TiltPhoto from '../ui/TiltPhoto'
-import HeroParticles from '../three/HeroParticles'
+import EchoTitle from '../ui/EchoTitle'
+import InteractiveBackground from '../layout/InteractiveBackground'
 
 interface HeroProps {
   isLoaded: boolean
@@ -13,59 +14,71 @@ const PILLS = ['● IA & Automation', '● Motion Design', '● Web Dev']
 
 export default function Hero({ isLoaded }: HeroProps) {
   const labelRef = useRef<HTMLDivElement>(null)
-  const h1Ref = useRef<HTMLDivElement>(null)
+  const line1Ref = useRef<HTMLSpanElement>(null)
+  const line2Ref = useRef<HTMLSpanElement>(null)
   const separatorRef = useRef<HTMLDivElement>(null)
-  const subRef = useRef<HTMLDivElement>(null)
+  const descRef = useRef<HTMLParagraphElement>(null)
   const pillsRef = useRef<HTMLDivElement>(null)
   const buttonsRef = useRef<HTMLDivElement>(null)
   const photoRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
 
+  // Mouse scrub global — écho + photo micro-rotation (subtil)
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2
+      const y = (e.clientY / window.innerHeight - 0.5) * 2
+
+      const echo = document.querySelector<HTMLElement>('.echo-title')
+      if (echo) {
+        gsap.to(echo, { x: x * 8, y: y * 6, duration: 4.0, ease: 'power2.out' })
+      }
+      if (photoRef.current) {
+        gsap.to(photoRef.current, { rotateY: x * 3, rotateX: y * -2, duration: 3.5, ease: 'power2.out' })
+      }
+    }
+
+    window.addEventListener('mousemove', onMouseMove)
+    return () => window.removeEventListener('mousemove', onMouseMove)
+  }, [])
+
+  // Animations onLoaded — lentes et confiantes
   useEffect(() => {
     if (!isLoaded) return
-    const tl = gsap.timeline({ delay: 0.2 })
 
-    tl.fromTo(labelRef.current, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' })
+    const tl = gsap.timeline()
 
-    if (h1Ref.current) {
-      const lines = h1Ref.current.querySelectorAll('.h1-line')
-      tl.fromTo(
-        lines,
-        { clipPath: 'inset(0 0 100% 0)', y: 50 },
-        { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1, stagger: 0.12, ease: 'power4.out' },
-        '-=0.2'
-      )
-    }
+    // 1. Label + Ligne 1 — partent ensemble
+    tl.from(labelRef.current, { y: 14, opacity: 0, duration: 0.8, ease: 'power3.out' })
+    tl.from(line1Ref.current, { y: '105%', duration: 0.9, ease: 'power4.out' }, '-=0.7')
 
-    tl.fromTo(separatorRef.current, { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power3.out', transformOrigin: 'left' }, '-=0.3')
+    // 2. Ligne 2
+    tl.from(line2Ref.current, { y: '105%', duration: 0.9, ease: 'power4.out' }, '-=0.7')
 
-    tl.fromTo(subRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, '-=0.2')
+    // 3. Séparateur + desc en même temps
+    tl.from(separatorRef.current, {
+      scaleX: 0, transformOrigin: 'left', duration: 0.7, ease: 'power3.out',
+    }, '-=0.5')
+    tl.from(descRef.current, { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
 
-    if (pillsRef.current) {
-      tl.fromTo(
-        pillsRef.current.children,
-        { y: 15, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
-        '-=0.3'
-      )
-    }
+    // 4. Pills + boutons + photo — tous ensemble
+    const pillEls = pillsRef.current ? Array.from(pillsRef.current.children) : []
+    tl.from(pillEls, { y: 14, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out' }, '-=0.6')
 
-    if (buttonsRef.current) {
-      tl.fromTo(
-        buttonsRef.current.children,
-        { y: 15, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.15, ease: 'power2.out' },
-        '-=0.3'
-      )
-    }
+    const btnEls = buttonsRef.current ? Array.from(buttonsRef.current.children) : []
+    tl.from(btnEls, { y: 12, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power3.out' }, '-=0.6')
 
-    tl.fromTo(
-      photoRef.current,
-      { x: 50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.3, ease: 'power3.out' },
-      0.4
-    )
+    tl.from(photoRef.current, {
+      x: 50, opacity: 0, duration: 1.2, ease: 'power3.out',
+      clipPath: 'inset(0 100% 0 0)',
+    }, '-=0.8')
+
+    // 5. Écho discret — commence avec la photo
+    tl.from('.echo-title', { opacity: 0, duration: 1.0, ease: 'power2.out' }, '-=1.0')
+
+    // 6. Scroll indicator
+    tl.from(scrollRef.current, { opacity: 0, y: 10, duration: 0.7, ease: 'power2.out' }, '-=0.5')
 
     // Scroll parallax
     ScrollTrigger.create({
@@ -75,10 +88,7 @@ export default function Hero({ isLoaded }: HeroProps) {
       scrub: true,
       onUpdate: (self) => {
         if (photoRef.current) {
-          gsap.set(photoRef.current, { y: self.progress * 80, opacity: 1 - self.progress * 0.4 })
-        }
-        if (h1Ref.current) {
-          gsap.set(h1Ref.current, { y: self.progress * -40 })
+          gsap.set(photoRef.current, { y: self.progress * 80, opacity: 1 - self.progress * 0.5 })
         }
         if (scrollRef.current) {
           gsap.set(scrollRef.current, { opacity: 1 - self.progress * 3 })
@@ -95,12 +105,12 @@ export default function Hero({ isLoaded }: HeroProps) {
         height: '100svh',
         display: 'grid',
         gridTemplateColumns: '55fr 45fr',
-        alignItems: 'center',
-        padding: '0 80px',
+        alignItems: 'end',
+        padding: '0 clamp(32px, 5vw, 80px)',
         overflow: 'hidden',
       }}
     >
-      <HeroParticles />
+      <InteractiveBackground />
 
       {/* Left column */}
       <div
@@ -111,90 +121,48 @@ export default function Hero({ isLoaded }: HeroProps) {
           flexDirection: 'column',
           gap: '1.5rem',
           paddingRight: '3rem',
+          paddingBottom: 'clamp(60px, 8vh, 100px)',
         }}
       >
         {/* Label */}
         <div
           ref={labelRef}
           className="label"
-          style={{ opacity: 0, display: 'flex', alignItems: 'center', gap: 8 }}
+          style={{ display: 'flex', alignItems: 'center', gap: 8 }}
         >
-          <span
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: '50%',
-              background: 'var(--accent)',
-              display: 'inline-block',
-            }}
-          />
-          CRÉATION × AUTOMATISATION × DESIGN
+          <span style={{
+            width: 6, height: 6, borderRadius: '50%',
+            background: 'var(--accent)', display: 'inline-block',
+          }} />
+          LILLE, FRANCE · CRÉATEUR IA
         </div>
 
-        {/* H1 */}
-        <div ref={h1Ref}>
-          <div
-            className="h1-line"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 800,
-              fontSize: 'clamp(64px, 10vw, 160px)',
-              color: 'var(--text-0)',
-              lineHeight: 0.92,
-              letterSpacing: '-0.03em',
-              clipPath: 'inset(0 0 100% 0)',
-            }}
-          >
-            SANDRO
-          </div>
-          <div
-            className="h1-line outline"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 800,
-              fontSize: 'clamp(64px, 10vw, 160px)',
-              lineHeight: 0.92,
-              letterSpacing: '-0.03em',
-              clipPath: 'inset(0 0 100% 0)',
-            }}
-          >
-            SCHILLACI
-          </div>
-        </div>
+        {/* Titre avec écho */}
+        <EchoTitle sectionRef={sectionRef} line1Ref={line1Ref} line2Ref={line2Ref} />
 
         {/* Separator */}
         <div
           ref={separatorRef}
-          style={{
-            width: 60,
-            height: 1,
-            background: 'var(--accent)',
-            transformOrigin: 'left',
-            transform: 'scaleX(0)',
-          }}
+          style={{ width: 60, height: 1, background: 'var(--accent)', transformOrigin: 'left' }}
         />
 
         {/* Subtitle */}
         <p
-          ref={subRef}
+          ref={descRef}
           style={{
             fontFamily: 'var(--font-body)',
             fontWeight: 300,
             fontSize: 18,
             color: 'var(--text-0)',
-            opacity: 0,
-            maxWidth: 400,
+            maxWidth: 420,
             lineHeight: 1.7,
           }}
         >
-          Designer créatif & développeur IA basé à Lille.
+          Systèmes qui automatisent. Designs qui marquent. Expériences qui restent.
         </p>
 
         {/* Pills */}
-        <div
-          ref={pillsRef}
-          style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}
-        >
+        <div ref={pillsRef} style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
           {PILLS.map(pill => (
             <span
               key={pill}
@@ -214,37 +182,38 @@ export default function Hero({ isLoaded }: HeroProps) {
         </div>
 
         {/* Buttons */}
-        <div ref={buttonsRef} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <div ref={buttonsRef} style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
           <Link
             to="/projets"
             style={{
               fontFamily: 'var(--font-body)',
               fontSize: 14,
-              fontWeight: 400,
-              color: 'var(--bg-0)',
+              fontWeight: 600,
+              color: '#0C0C0A',
               background: 'var(--accent)',
-              padding: '12px 28px',
+              padding: '13px 28px',
               display: 'inline-block',
-              opacity: 0,
+              letterSpacing: '0.02em',
               transition: 'opacity 0.2s',
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = '0.85' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = '1' }}
           >
-            VOIR MES PROJETS →
+            MES PROJETS →
           </Link>
           <a
-            href="#about"
+            href="/cv.pdf"
+            download="CV_Alessandro_Schillaci.pdf"
             style={{
               fontFamily: 'var(--font-body)',
               fontSize: 14,
               fontWeight: 400,
               color: 'var(--text-0)',
               border: '1px solid var(--text-2)',
-              padding: '12px 28px',
+              padding: '13px 28px',
               display: 'inline-block',
-              opacity: 0,
               transition: 'border-color 0.2s',
+              textDecoration: 'none',
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--text-0)' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--text-2)' }}
@@ -254,15 +223,18 @@ export default function Hero({ isLoaded }: HeroProps) {
         </div>
       </div>
 
-      {/* Right column — photo */}
+      {/* Right column — photo, collée en bas, sans height forcé */}
       <div
         ref={photoRef}
+        className="hero-photo-wrap"
         style={{
-          height: '80vh',
-          opacity: 0,
           position: 'relative',
           zIndex: 1,
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'flex-end',
           overflow: 'hidden',
+          transformStyle: 'preserve-3d',
         }}
       >
         <TiltPhoto />

@@ -5,9 +5,13 @@ import TiltPhoto from '../components/ui/TiltPhoto'
 import Footer from '../components/layout/Footer'
 import { skills, timeline } from '../data/content'
 
+const QUOTE = "Je construis des systèmes IA qui tournent vraiment. Pas des slides. Des trucs qui fonctionnent."
+
 export default function About() {
   const timelineRef = useRef<HTMLDivElement>(null)
   const skillsRef = useRef<HTMLDivElement>(null)
+  const quoteRef = useRef<HTMLDivElement>(null)
+  const carteRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Timeline animations
@@ -38,89 +42,171 @@ export default function About() {
         }
       )
     })
+
+    // Carte Sandro
+    if (carteRef.current) {
+      gsap.from(carteRef.current, {
+        y: 50, opacity: 0, rotate: -12,
+        duration: 1.3, ease: 'power3.out',
+        scrollTrigger: { trigger: carteRef.current, start: 'top 90%', once: true },
+      })
+    }
+
+    // Citation mot par mot
+    if (quoteRef.current) {
+      const words = quoteRef.current.querySelectorAll('.word')
+      gsap.from(words, {
+        opacity: 0.1,
+        duration: 0.7,
+        ease: 'power2.out',
+        stagger: 0.055,
+        scrollTrigger: {
+          trigger: quoteRef.current,
+          start: 'top 65%',
+          once: true,
+        },
+      })
+    }
   }, [])
 
   return (
     <PageTransition>
       <main style={{ paddingTop: 52 }}>
         {/* Header */}
-        <div style={{ padding: '5rem 80px 3rem' }}>
+        <div style={{ padding: '5rem clamp(24px, 5vw, 80px) 3rem' }}>
           <div className="label" style={{ marginBottom: '1.5rem' }}>PARCOURS & COMPÉTENCES</div>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontWeight: 800,
-              fontSize: 'clamp(64px, 10vw, 10vw)',
-              lineHeight: 0.92,
-              letterSpacing: '-0.03em',
+              fontSize: 'clamp(52px, 9vw, 130px)',
+              lineHeight: 0.9,
+              letterSpacing: '-0.04em',
               color: 'var(--text-0)',
-            }}
-          >
-            À PROPOS
-          </h1>
-          <h1
-            className="outline"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 800,
-              fontSize: 'clamp(64px, 10vw, 10vw)',
-              lineHeight: 0.92,
-              letterSpacing: '-0.03em',
               marginBottom: '4rem',
             }}
           >
-            DE SANDRO
+            <em style={{
+              fontFamily: 'Playfair Display, serif',
+              fontStyle: 'italic',
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+            }}>À propos</em>{' '}
+            <span className="outline">de Sandro</span>
           </h1>
         </div>
 
-        {/* Bio section */}
+        {/* Stats row */}
         <div
           style={{
-            padding: '6rem 80px',
+            padding: '2rem clamp(24px, 5vw, 80px)',
+            display: 'flex',
+            gap: '3rem',
+            flexWrap: 'wrap',
+            borderTop: '1px solid var(--text-2)',
+            borderBottom: '1px solid var(--text-2)',
+            marginBottom: '4rem',
+          }}
+        >
+          {[
+            { value: '06', label: 'Projets livrés' },
+            { value: '20', label: 'Ans' },
+            { value: '2+', label: 'Ans expérience' },
+          ].map(stat => (
+            <div key={stat.label}>
+              <div
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontWeight: 800,
+                  fontSize: 'clamp(36px, 5vw, 64px)',
+                  lineHeight: 1,
+                  letterSpacing: '-0.03em',
+                  color: 'var(--accent)',
+                }}
+              >
+                {stat.value}
+              </div>
+              <div className="label" style={{ marginTop: 6 }}>{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bio section — citation mot par mot */}
+        <div
+          style={{
+            padding: '100px clamp(40px, 8vw, 160px)',
             background: 'var(--bg-1)',
             textAlign: 'center',
           }}
         >
-          <blockquote
+          <div
+            ref={quoteRef}
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 700,
-              fontSize: 'clamp(24px, 3.5vw, 56px)',
-              lineHeight: 1.2,
+              fontWeight: 800,
+              fontSize: 'clamp(26px, 3.5vw, 56px)',
+              lineHeight: 1.3,
               letterSpacing: '-0.02em',
-              fontStyle: 'italic',
               color: 'var(--text-0)',
               maxWidth: 900,
               margin: '0 auto',
             }}
           >
-            "Je ne fais pas des slides sur l'IA.<br />Je construis des systèmes qui fonctionnent."
-          </blockquote>
+            {QUOTE.split(' ').map((word, i) => (
+              <span
+                key={i}
+                className="word"
+                style={{ display: 'inline-block', marginRight: '0.28em' }}
+              >
+                {word}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Bio + photo */}
         <div
           style={{
-            padding: '6rem 80px',
+            padding: '6rem clamp(24px, 5vw, 80px)',
             display: 'grid',
             gridTemplateColumns: '400px 1fr',
             gap: '6rem',
             alignItems: 'start',
           }}
         >
-          <div style={{ position: 'sticky', top: 80, height: 520 }}>
+          <div style={{ position: 'sticky', top: 80, height: 520, display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'flex-start' }}>
             <TiltPhoto />
+            <div
+              ref={carteRef}
+              style={{
+                width: 140,
+                aspectRatio: '2/3',
+                borderRadius: 10,
+                overflow: 'hidden',
+                flexShrink: 0,
+                transform: 'rotate(-4deg)',
+                boxShadow: '0 24px 60px rgba(0,0,0,0.8)',
+                border: '1px solid rgba(200,255,0,0.25)',
+                alignSelf: 'flex-end',
+              }}
+            >
+              <img
+                src="/images/carte_sandro.png"
+                alt="Carte Sandro"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <p className="body-lg" style={{ color: 'var(--text-0)' }}>
-              Micro-entrepreneur à 20 ans, je construis des systèmes IA qui automatisent, génèrent et optimisent. Pas des slides — des agents qui tournent.
+              Vision 2, mon agent IA, voit ton écran et exécute des tâches en autonomie. Je l'ai codé seul, de zéro, avec FastAPI, Ollama et Groq. C'est ça qui me définit : je ne parle pas d'IA, je la construis.
             </p>
             <p className="body-lg">
-              Étudiant Chef de Projets Digitaux à Ynov Lille (B1→B2), ancien sapeur-pompier volontaire pendant 3 ans. La rigueur du terrain, l'énergie du digital.
+              Direction artistique, motion design, interfaces web premium. Pulse Digital c'est ma structure, mais c'est surtout ma façon de prouver qu'un bon design n'est pas réservé aux grandes agences.
             </p>
             <p className="body-lg">
-              Disponible pour une alternance B2 dès septembre 2025. Basé à Lille, mobile partout.
+              Je cherche une entreprise qui veut un profil rare : quelqu'un qui comprend le business, maîtrise les outils IA les plus récents, et livre. Disponible septembre 2025, Lille et remote.
             </p>
           </div>
         </div>

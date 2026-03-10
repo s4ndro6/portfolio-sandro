@@ -1,23 +1,26 @@
-# CHECKPOINT AAZ V4 — Phase 5 Complete
-Date: 2026-03-09
+# CHECKPOINT PHASE 5 ✅ — BUILD FINAL
 
-## ✅ FAIT
-- `Home.tsx` : BootLoader → HeroShader + Hero → AboutHome → ProjectsGrid (limit 3) → ToolsMarquee
-- `AboutHome.tsx` : bio 2 paragraphes + CountUp stats (05/20/∞) + TiltPhoto
-- `Projects.tsx` : header scramble + filtre CLI dropdown + grille ProjectCard
-- `ProjectsGrid.tsx` : grille CSS grid repeat(4, 1fr), stagger scroll animation
-- `About.tsx` : header scramble dual h1 + TypeWriter bio + TiltPhoto sticky + SkillsTerminal + Timeline SVG stroke
-- `SkillsTerminal.tsx` : terminal $ skills --list --verbose, barres animées ScrollTrigger
-- `Contact.tsx` : header scramble + TypeWriter intro + ContactSection
-- `ContactSection.tsx` : terminal form (nom/email/sujet pills/message/submit), links, alternance card
-- `ToolsMarquee.tsx` : 3 lignes marquee CSS animation keyframes, pause on hover
-- `MagneticBtn.tsx` : hover magnetic, elastic.out return
+## npm run build
+- 0 erreurs TypeScript ✅
+- 469 modules transformés ✅
+- dist/index.html + CSS 4.68kB gzip 1.81kB + JS 541kB gzip 178kB ✅
+- Build time : 3.54s ✅
 
-## 📁 FICHIERS CLÉS
-- src/pages/ (Home, Projects, About, Contact — tous complets)
-- src/components/sections/ (tous les composants)
-- src/components/ui/ (tous les composants UI)
+## PORTFOLIO TERMINÉ ✅
 
-## 💬 PROMPT DE REPRISE
-> Reprends le portfolio AAZ V4 depuis le checkpoint Phase 5.
-> Lis CHECKPOINT_PHASE5.md et continue à partir de la Phase 6.
+### Récapitulatif complet
+✅ SANDRO sur une seule ligne — .hero-line white-space:nowrap clamp auto
+✅ Animation titre — y:'105%' sur lignes entières (power4.out 1.0s)
+✅ Bouton "MES PROJETS →" vert accent, font-weight 600
+✅ FloatingImages — supprimé partout
+✅ ProjectCard hover — killTweensOf + clipPath leave sort par le bas
+✅ About — textes IA/Pulse Digital/alternance impactants
+✅ Citation — "Je construis des systèmes IA qui tournent vraiment."
+✅ Timeline — Pulse Digital 2025 + Ynov Lille uniquement
+✅ Stats — 6+ projets / 20 ans Fondateur Pulse Digital / 100% Autodidacte
+✅ Coordonnées — yahoo + LinkedIn + Instagram uniquement
+✅ GitHub + Fiverr — absents partout
+✅ Pages projets — texte long, challenge, résultat, nav prev/next
+✅ Cards projets — cliquables → /projets/:slug
+✅ ScrollTrigger strip — setTimeout 200ms + refresh + invalidateOnRefresh
+✅ Loader — ligne accent → SANDRO → split panels

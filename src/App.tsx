@@ -5,6 +5,7 @@ import Cursor from './components/layout/Cursor'
 import Navbar from './components/layout/Navbar'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
+import Project from './pages/Project'
 import About from './pages/About'
 import Contact from './pages/Contact'
 
@@ -15,6 +16,7 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/projets" element={<Projects />} />
+        <Route path="/projets/:slug" element={<Project />} />
         <Route path="/a-propos" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

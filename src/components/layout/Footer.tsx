@@ -15,10 +15,8 @@ export default function Footer() {
 
       <div style={{ display: 'flex', gap: '2rem' }}>
         {[
-          { label: 'LinkedIn', href: 'https://linkedin.com' },
-          { label: 'GitHub', href: 'https://github.com' },
-          { label: 'TikTok', href: 'https://tiktok.com' },
-          { label: 'Fiverr', href: 'https://fiverr.com' },
+          { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sandrosch' },
+          { label: 'Instagram', href: 'https://instagram.com/sndro.sch' },
         ].map(({ label, href }) => (
           <a
             key={label}

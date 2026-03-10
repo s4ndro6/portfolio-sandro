@@ -2,7 +2,7 @@ import { useState } from 'react'
 import PageTransition from '../components/layout/PageTransition'
 import Footer from '../components/layout/Footer'
 
-const EMAIL = 'sandro.schillaci@gmail.com'
+const EMAIL = 'alessandroschillaci05@yahoo.com'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
@@ -33,36 +33,30 @@ export default function Contact() {
     <PageTransition>
       <main style={{ paddingTop: 52 }}>
         {/* Header */}
-        <div style={{ padding: '5rem 80px 3rem' }}>
+        <div style={{ padding: '5rem clamp(24px, 5vw, 80px) 3rem' }}>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontWeight: 800,
-              fontSize: 'clamp(64px, 10vw, 10vw)',
-              lineHeight: 0.92,
-              letterSpacing: '-0.03em',
+              fontSize: 'clamp(52px, 9vw, 130px)',
+              lineHeight: 0.9,
+              letterSpacing: '-0.04em',
               color: 'var(--text-0)',
-            }}
-          >
-            TRAVAILLONS
-          </h1>
-          <h1
-            className="outline"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 800,
-              fontSize: 'clamp(64px, 10vw, 10vw)',
-              lineHeight: 0.92,
-              letterSpacing: '-0.03em',
               marginBottom: '3rem',
             }}
           >
-            ENSEMBLE.
+            <em style={{
+              fontFamily: 'Playfair Display, serif',
+              fontStyle: 'italic',
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+            }}>Travaillons</em>{' '}
+            <span className="outline-accent">Ensemble.</span>
           </h1>
         </div>
 
         {/* Email grand */}
-        <div style={{ padding: '0 80px 5rem' }}>
+        <div style={{ padding: '0 clamp(24px, 5vw, 80px) 5rem' }}>
           <button
             onClick={copyEmail}
             style={{
@@ -103,7 +97,7 @@ export default function Contact() {
         {/* Form + Card */}
         <div
           style={{
-            padding: '0 80px 6rem',
+            padding: '0 clamp(24px, 5vw, 80px) 6rem',
             display: 'grid',
             gridTemplateColumns: '1fr 400px',
             gap: '6rem',
@@ -229,8 +223,8 @@ export default function Contact() {
                 Ynov Lille · Septembre 2025
               </div>
               <a
-                href="/cv-sandro-schillaci.pdf"
-                download
+                href="/cv.pdf"
+                download="CV_Alessandro_Schillaci.pdf"
                 style={{
                   fontFamily: 'var(--font-body)',
                   fontSize: 13,
@@ -250,10 +244,8 @@ export default function Contact() {
             {/* Social links */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {[
-                { label: 'LinkedIn', href: 'https://linkedin.com' },
-                { label: 'GitHub', href: 'https://github.com' },
-                { label: 'TikTok', href: 'https://tiktok.com' },
-                { label: 'Fiverr', href: 'https://fiverr.com' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sandrosch' },
+                { label: 'Instagram', href: 'https://instagram.com/sndro.sch' },
               ].map(({ label, href }) => (
                 <a
                   key={label}

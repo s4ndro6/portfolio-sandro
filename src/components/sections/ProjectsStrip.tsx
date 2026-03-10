@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { projects } from '../../data/content'
 
 interface ProjectsStripProps {
@@ -17,23 +18,33 @@ export default function ProjectsStrip({ isLoaded }: ProjectsStripProps) {
     const track = trackRef.current
     if (!section || !track) return
 
-    const ctx = gsap.context(() => {
-      gsap.to(track, {
-        x: () => -(track.scrollWidth - window.innerWidth),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: () => `+=${track.scrollWidth - window.innerWidth}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      })
-    }, section)
+    let ctx: ReturnType<typeof gsap.context>
 
-    return () => ctx.revert()
+    const timer = setTimeout(() => {
+      const dist = track.scrollWidth - window.innerWidth
+      if (dist <= 0) return
+      ctx = gsap.context(() => {
+        gsap.to(track, {
+          x: -dist,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${dist}`,
+            scrub: 1.2,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+      }, section)
+      ScrollTrigger.refresh()
+    }, 200)
+
+    return () => {
+      clearTimeout(timer)
+      ctx?.revert()
+    }
   }, [isLoaded])
 
   const preview = projects.slice(0, 4)

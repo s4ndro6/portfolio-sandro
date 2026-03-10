@@ -9,7 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 // Single Lenis instance — useLenis hook is disabled to avoid double init
-const lenis = new Lenis({ lerp: 0.08, smoothWheel: true })
+const lenis = new Lenis({ lerp: 0.055, smoothWheel: true, wheelMultiplier: 0.8 })
 gsap.ticker.add((time) => lenis.raf(time * 1000))
 gsap.ticker.lagSmoothing(0)
 lenis.on('scroll', () => ScrollTrigger.update())
