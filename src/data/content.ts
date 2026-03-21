@@ -147,6 +147,20 @@ export const projects: Project[] = [
     size: "small",
   },
   {
+    id: "06-d",
+    slug: "alternance-hunt",
+    title: "ALTERNANCE\nHUNT",
+    subtitle: "Pipeline d'automatisation IA",
+    year: "2025",
+    status: "Actif",
+    location: "Lille — Remote",
+    description: "Système n8n complet de candidature automatique. 226+ emails envoyés, 94+ candidatures via API France Travail, agent IA de personnalisation des lettres de motivation en temps réel. Stack : n8n, OpenAI, SerpAPI, Gmail API.",
+    tags: ["n8n", "OpenAI", "API", "Automation", "Gmail API", "SerpAPI"],
+    color: "#84FF00",
+    media: "/images/alternance_hunt.png",
+    size: "large",
+  },
+  {
     id: "07",
     slug: "vision-2",
     title: "VISION 2",
@@ -264,6 +278,11 @@ export const projectDetails: Record<string, ProjectDetail> = {
     longDesc: "Site web livré pour un client — design premium, responsive, optimisé.",
     challenge: "Design distinctif avec budget maîtrisé.",
     result: "Site livré, client satisfait.",
+  },
+  'alternance-hunt': {
+    longDesc: "Pipeline n8n complet d'automatisation de candidatures. Scraping des offres France Travail, génération de lettres de motivation personnalisées via OpenAI, envoi automatique par Gmail API. 3 robots actifs en parallèle.",
+    challenge: "Orchestrer 3 robots en parallèle sans dépasser les rate limits des API et personnaliser chaque candidature pour éviter le spam.",
+    result: "226+ emails envoyés, 94+ candidatures API, 0 erreurs. Pipeline stable et actif.",
   },
 }
 
