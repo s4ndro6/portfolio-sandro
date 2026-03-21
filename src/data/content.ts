@@ -151,7 +151,7 @@ export const projects: Project[] = [
     slug: "alternance-hunt",
     title: "ALTERNANCE\nHUNT",
     subtitle: "Pipeline d'automatisation IA",
-    year: "2025",
+    year: "2026",
     status: "Actif",
     location: "Lille — Remote",
     description: "Système n8n complet de candidature automatique. 226+ emails envoyés, 94+ candidatures via API France Travail, agent IA de personnalisation des lettres de motivation en temps réel. Stack : n8n, OpenAI, SerpAPI, Gmail API.",
