@@ -1,28 +1,38 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './styles/globals.css'
-import App from './App.tsx'
-import Lenis from 'lenis'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./styles/globals.css";
+import App from "./App.tsx";
+import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 // Single Lenis instance — useLenis hook is disabled to avoid double init
-const lenis = new Lenis({ lerp: 0.055, smoothWheel: true, wheelMultiplier: 0.8 })
-gsap.ticker.add((time) => lenis.raf(time * 1000))
-gsap.ticker.lagSmoothing(0)
-lenis.on('scroll', () => ScrollTrigger.update())
+const isMobile = window.innerWidth < 768;
 
-// Expose lenis globally so components can access it
-;(window as typeof window & { lenis: Lenis }).lenis = lenis
+const lenis = isMobile
+  ? null
+  : new Lenis({
+      duration: 1.0,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.8,
+    });
 
-window.addEventListener('load', () => {
-  ScrollTrigger.refresh()
-})
+if (lenis) {
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  (window as typeof window & { lenis: Lenis }).lenis = lenis;
+}
 
-createRoot(document.getElementById('root')!).render(
+window.addEventListener("load", () => {
+  ScrollTrigger.refresh();
+});
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
   </StrictMode>,
-)
+);
